@@ -29,6 +29,11 @@ namespace Prototype.ScriptableObjects
         [SerializeField]
         private float m_StartHealthRegenerationDelay = 5f;
 
+        [SerializeField]
+        private int m_Damage = 3;
+        [SerializeField]
+        private int m_Heal = 5;
+
         public float Sensitivity => m_Sensitivity;
         public float SprintSpeed => m_SprintSpeed;
         public float HorizontalSpeed => m_HorizontalSpeed;
@@ -40,6 +45,9 @@ namespace Prototype.ScriptableObjects
         public float IncreaseStaminaRate => m_IncreaseStaminaRate;
         public float RegenerateHealthRate => m_RegenerateHealthRate;
         public float StartHealthRegenerationDelay => m_StartHealthRegenerationDelay;
+
+        public int Damage => m_Damage;
+        public int Heal => m_Heal;
     }
 
 }

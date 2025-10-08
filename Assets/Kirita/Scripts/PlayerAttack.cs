@@ -1,3 +1,4 @@
+using Prototype.ScriptableObjects;
 using UnityEngine;
 
 namespace Prototype.Games
@@ -7,10 +8,8 @@ namespace Prototype.Games
     /// </summary>
     public class PlayerAttack : MonoBehaviour
     {
-        [SerializeField,Min(0)]
-        private int m_Damage = 1;
-        [SerializeField,Min(0)]
-        private int m_Heal = 1;
+        [SerializeField]
+        private PlayerStateSO m_PlayerState;
 
         //HACK: Triggerに入ったオブジェクトに対してダメージまたは回復を与える簡易的な実装
         private void OnTriggerEnter(Collider other)
@@ -20,14 +19,14 @@ namespace Prototype.Games
             Player player = other.GetComponentInParent<Player>();
             if (player != null)
             {
-                player.Heal(m_Heal);
+                player.Heal(m_PlayerState.Heal);
                 return;
             }
 
             IDamageable damageable = other.GetComponentInParent<IDamageable>();
             if (damageable != null)
             {
-                damageable.Damage(m_Damage);
+                damageable.Damage(m_PlayerState.Damage);
             }
         }
     }

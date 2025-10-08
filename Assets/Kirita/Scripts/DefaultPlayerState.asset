@@ -20,5 +20,7 @@ MonoBehaviour:
   m_MaxStamina: 100
   m_DecreaseStaminaRate: 1
   m_IncreaseStaminaRate: 0.8
-  m_RegenerateHealthRate: 0.5
+  m_RegenerateHealthRate: 0.1
   m_StartHealthRegenerationDelay: 5
+  m_Damage: 3
+  m_Heal: 5

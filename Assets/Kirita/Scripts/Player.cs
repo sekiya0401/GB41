@@ -4,12 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Prototype.ScriptableObjects;
 using Unity.Cinemachine;
-using System.Text;
 using System.Collections;
-
-
-
-
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -26,7 +21,7 @@ namespace Prototype.Games
         [SerializeField]
         private CinemachineCamera m_Camera;
         [SerializeField]
-        private DelayUnityEvent m_Attack;
+        private DelayUnityEvent m_AttackEvent;
         [SerializeField]
         private PlayerStateSO m_PlayerState;
         [SerializeField]
@@ -128,6 +123,10 @@ namespace Prototype.Games
             m_LookValue = context.ReadValue<Vector2>();
         }
 
+        /// <summary>
+        /// スプリント入力
+        /// </summary>
+        /// <param name="context">入力情報</param>
         public void OnSprint(InputAction.CallbackContext context)
         {
             m_IsSprinting = context.ReadValueAsButton();
@@ -142,7 +141,7 @@ namespace Prototype.Games
             //HACK: 一つのアタックにしか対応出来ていないので、複数アクションに対応させる場合は修正が必要
             if(HasStateAuthority && context.started)
             {
-                m_Attack.Invoke();
+                m_AttackEvent.Invoke();
             }
         }
 
@@ -166,6 +165,26 @@ namespace Prototype.Games
             m_MoveValue.y = context.ReadValueAsButton() ? -m_PlayerState.VerticalSpeed : 0.0f;
         }
 
+        /// <summary>
+        /// アクティベート入力
+        /// </summary>
+        /// <param name="context">入力情報</param>
+        public void OnActivate(InputAction.CallbackContext context)
+        {
+            if (context.started)
+            {
+                switch (Cursor.lockState)
+                {
+                    case CursorLockMode.None:
+                        Cursor.lockState = CursorLockMode.Locked;
+                        break;
+                    case CursorLockMode.Locked:
+                        Cursor.lockState = CursorLockMode.None;
+                        break;
+                }
+            }
+        }
+        
         public override void FixedUpdateNetwork()
         {
             if(!HasStateAuthority || m_IsDead)
@@ -267,7 +286,6 @@ namespace Prototype.Games
             m_IsRegenerating = true;
             m_Regeneration = null;
         }
-
 
         //****Debug****//
         public void OnResetHealth(InputAction.CallbackContext context)

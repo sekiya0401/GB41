@@ -348,7 +348,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b89954777d6bd9549ba88f4b49ab0d2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Damage: 70
+  m_Damage: 5
 --- !u!1001 &102238500
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -972,14 +972,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1068265847}
     m_Modifications:
-    - target: {fileID: 2002168439452601485, guid: 88a2444294f00a9468e49193226b76cc, type: 3}
-      propertyPath: m_Value
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2002168439452601485, guid: 88a2444294f00a9468e49193226b76cc, type: 3}
-      propertyPath: m_MaxValue
-      value: 100
-      objectReference: {fileID: 0}
     - target: {fileID: 3308915278578922435, guid: 88a2444294f00a9468e49193226b76cc, type: 3}
       propertyPath: m_Color.b
       value: 0

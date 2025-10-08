@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 3131316849674705099}
   - component: {fileID: 7890946444900805008}
   - component: {fileID: 9151947461345034633}
-  - component: {fileID: 7952867569979463835}
   - component: {fileID: 6793033277609541191}
   - component: {fileID: 6085868929413035406}
+  - component: {fileID: 6104578894034522116}
   m_Layer: 6
   m_Name: AttackPoint
   m_TagString: Untagged
@@ -125,20 +125,6 @@ MonoBehaviour:
         m_CallState: 2
   m_Delay: 0.3
   m_UnscaledTime: 0
---- !u!114 &7952867569979463835
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 336510803643973407}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c2bf7735eedee8478451f06362a44fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Damage: 10
-  m_Heal: 10
 --- !u!33 &6793033277609541191
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -192,6 +178,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &6104578894034522116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 336510803643973407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c2bf7735eedee8478451f06362a44fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PlayerState: {fileID: 11400000, guid: 9b517510ef20e044ea6fac6b17647741, type: 2}
 --- !u!1 &2799055660787283556
 GameObject:
   m_ObjectHideFlags: 0
@@ -424,6 +423,22 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 9caa3d8a-6b2f-4e8e-8bad-6ede561bd9be
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4784752788040370326}
+        m_TargetAssemblyTypeName: Prototype.Games.Player, Assembly-CSharp
+        m_MethodName: OnActivate
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: c5b65370-4bc3-4a09-a5d6-558ece8ec4c2
+    m_ActionName: 'Player/Activate[/Keyboard/escape,/SwitchProControllerHID/start]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -526,7 +541,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Camera: {fileID: 4899771572628056988}
-  m_Attack: {fileID: 9151947461345034633}
+  m_AttackEvent: {fileID: 9151947461345034633}
   m_PlayerState: {fileID: 11400000, guid: 9b517510ef20e044ea6fac6b17647741, type: 2}
   m_StaminaEventChannel: {fileID: 11400000, guid: f28ae2193f2a9fe46bd62ce51118fdc1, type: 2}
   m_HealthEventChannel: {fileID: 11400000, guid: 384b1ee987801144ba948c360a932eb4, type: 2}

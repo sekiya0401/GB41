@@ -265,7 +265,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2002168439452601485, guid: 88a2444294f00a9468e49193226b76cc, type: 3}
       propertyPath: m_MaxValue
-      value: 100
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 3308915278578922435, guid: 88a2444294f00a9468e49193226b76cc, type: 3}
       propertyPath: m_Color.b
