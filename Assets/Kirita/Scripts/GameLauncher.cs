@@ -16,6 +16,10 @@ namespace Prototype.Games
         private NetworkRunner m_NetworkRunner;
         [SerializeField]
         private NetworkPrefabRef m_PlayerPrefab;
+        [SerializeField]
+        private NetworkPrefabRef m_FestivalPrefab;
+        [SerializeField]
+        private Transform m_FestivalSpawnPoint;
 
         private async void Start()
         {
@@ -45,6 +49,11 @@ namespace Prototype.Games
 
                 //ÉvÉåÉCÉÑÅ[ÇÃê∂ê¨
                 runner.Spawn(m_PlayerPrefab, spawnPoint, Quaternion.identity);
+
+                if(runner.IsSharedModeMasterClient)
+                {
+                    runner.Spawn(m_FestivalPrefab, m_FestivalSpawnPoint.position, m_FestivalSpawnPoint.rotation);
+                }
             }
         }
         void INetworkRunnerCallbacks.OnPlayerLeft(NetworkRunner runner, PlayerRef player) { }

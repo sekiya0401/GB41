@@ -16,7 +16,7 @@ MonoBehaviour:
   m_SprintSpeed: 2
   m_HorizontalSpeed: 3
   m_VerticalSpeed: 1
-  m_MaxHealth: 100
+  m_MaxHealth: 20
   m_MaxStamina: 100
   m_DecreaseStaminaRate: 1
   m_IncreaseStaminaRate: 0.8

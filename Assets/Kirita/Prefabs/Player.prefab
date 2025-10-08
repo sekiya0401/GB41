@@ -305,7 +305,19 @@ MonoBehaviour:
     m_ActionId: 6c2ab1b8-8984-453a-af3d-a3c78ae1679a
     m_ActionName: 'Player/Attack[/Mouse/leftButton,/Keyboard/enter]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4784752788040370326}
+        m_TargetAssemblyTypeName: Prototype.Games.Player, Assembly-CSharp
+        m_MethodName: OnSprint
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 641cd816-40e6-41b4-8c3d-04687c349290
     m_ActionName: 'Player/Sprint[/Keyboard/leftCtrl,/Keyboard/leftAlt,/Mouse/rightButton]'
   - m_PersistentCalls:
@@ -514,10 +526,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Camera: {fileID: 4899771572628056988}
-  m_Sensitivity: 1
-  m_SprintSpeed: 2
-  m_HorizontalSpeed: 3
-  m_VirticalSpeed: 3
   m_Attack: {fileID: 9151947461345034633}
   m_PlayerState: {fileID: 11400000, guid: 9b517510ef20e044ea6fac6b17647741, type: 2}
   m_StaminaEventChannel: {fileID: 11400000, guid: f28ae2193f2a9fe46bd62ce51118fdc1, type: 2}
