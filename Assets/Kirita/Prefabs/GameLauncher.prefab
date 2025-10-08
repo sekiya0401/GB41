@@ -46,4 +46,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_NetworkRunner: {fileID: 534414205791151217, guid: ecb8e72bd2f23314bbd952b9df822613, type: 3}
   m_PlayerPrefab:
-    RawGuidValue: 00000000000000000000000000000000
+    RawGuidValue: 2d4f54042f06da04e81a12eb7f19181c

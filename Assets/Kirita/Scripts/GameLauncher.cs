@@ -4,8 +4,12 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 
-namespace Prototype.Game
+namespace Prototype.Games
 {
+    /// <summary>
+    /// ゲームの起動とネットワークランナーの管理を行うランチャー
+    /// HACK: 簡易的にSharedモードで起動する実装
+    /// </summary>
     public class GameLauncher : MonoBehaviour, INetworkRunnerCallbacks
     {
         [SerializeField]
