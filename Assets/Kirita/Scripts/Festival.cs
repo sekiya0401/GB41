@@ -7,7 +7,7 @@ namespace Prototype.Games
     /// <summary>
     /// Ç®ç’ÇËêßå‰
     /// </summary>
-    public class Festival : NetworkBehaviour,IDamageable
+    public class Festival : NetworkBehaviour,IDamagable
     {
         private readonly int MAX_HEALTH = 100;
 
@@ -22,7 +22,7 @@ namespace Prototype.Games
             m_HealthField.text = $"{Health} / {MAX_HEALTH}";
         }
 
-        void IDamageable.Damage(int damage)
+        void IDamagable.Damage(int damage)
         {
             RPC_Damage(damage);
         }

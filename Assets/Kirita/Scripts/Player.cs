@@ -16,7 +16,7 @@ namespace Prototype.Games
     /// </summary>
     [RequireComponent(typeof(PlayerInput)),
      RequireComponent(typeof(SimpleKCC))]
-    public class Player : NetworkBehaviour, IDamageable
+    public class Player : NetworkBehaviour, IDamagable
     {
         [SerializeField]
         private CinemachineCamera m_Camera;

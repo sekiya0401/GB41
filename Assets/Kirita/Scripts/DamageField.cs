@@ -13,8 +13,8 @@ namespace Prototype.Games
 
         private void OnTriggerEnter(Collider other)
         {
-            //NOTE: 対象が子オブジェクトの場合も考慮して親オブジェクトと対象オブジェクト両方からIDamageableがないか探す
-            var damageable = other.GetComponentInParent<IDamageable>();
+            //NOTE: 対象が子オブジェクトの場合も考慮して親オブジェクトと対象オブジェクト両方からIDamagableがないか探す
+            var damageable = other.GetComponentInParent<IDamagable>();
             if (damageable != null)
             {
                 damageable.Damage(m_Damage);

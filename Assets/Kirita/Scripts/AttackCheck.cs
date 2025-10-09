@@ -7,7 +7,7 @@ namespace Prototype.Games
     /// <summary>
     /// ダメージチェック
     /// </summary>
-    public class AttackCheck : MonoBehaviour,IDamageable
+    public class AttackCheck : MonoBehaviour,IDamagable
     {
         [SerializeField,Min(0)]
         private int m_Health = 100;
@@ -29,7 +29,7 @@ namespace Prototype.Games
             UpdateState();
         }
 
-        void IDamageable.Damage(int damage)
+        void IDamagable.Damage(int damage)
         {
             m_Health = Mathf.Clamp(m_Health - damage, 0, m_MaxHealth);
             UpdateState();
