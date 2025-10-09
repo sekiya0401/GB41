@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 8020685631992076997}
   - component: {fileID: 1850874316913197081}
   - component: {fileID: 1279027227217925427}
-  - component: {fileID: 8370111353857547513}
   - component: {fileID: 7554370858937703777}
+  - component: {fileID: 2991026312046478601}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 3815113863631514509}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6, y: 1, z: 16}
+  m_LocalPosition: {x: 6, y: 1, z: -3.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -53,7 +53,7 @@ NavMeshAgent:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3815113863631514509}
   m_Enabled: 1
-  m_AgentTypeID: -334000983
+  m_AgentTypeID: -1372625422
   m_Radius: 0.5
   m_Speed: 3
   m_Acceleration: 1
@@ -67,25 +67,6 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &8370111353857547513
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3815113863631514509}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5c79bba0fd76ab4c8780e94ba2e7cd2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Agent: {fileID: 1279027227217925427}
-  m_Surface: {fileID: 0}
-  m_Target: {fileID: 0}
-  m_Core: {fileID: 0}
-  m_hp: 1
-  m_MaxDistance: 2
-  m_RepathInterval: 0.1
 --- !u!54 &7554370858937703777
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -113,6 +94,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &2991026312046478601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3815113863631514509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a51f1a41afcf129499f8aac201cede4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Agent: {fileID: 1279027227217925427}
+  m_Surface: {fileID: 0}
+  m_Target: {fileID: 0}
+  m_hp: 1
+  m_MaxDistance: 2
 --- !u!1 &5497864827752859850
 GameObject:
   m_ObjectHideFlags: 0

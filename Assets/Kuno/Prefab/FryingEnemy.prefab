@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 3126966039296498271}
   - component: {fileID: 2500222558695806879}
   - component: {fileID: 2028016436802387789}
-  - component: {fileID: 7232664337911705950}
   - component: {fileID: 1977702729019791891}
+  - component: {fileID: 3183492949267799943}
   m_Layer: 0
   m_Name: FryingEnemy
   m_TagString: Untagged
@@ -52,7 +52,7 @@ NavMeshAgent:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1933333176539356615}
   m_Enabled: 1
-  m_AgentTypeID: -1923039037
+  m_AgentTypeID: 1479372276
   m_Radius: 0.5
   m_Speed: 3
   m_Acceleration: 1
@@ -66,26 +66,6 @@ NavMeshAgent:
   m_BaseOffset: 2
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &7232664337911705950
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1933333176539356615}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a7797cbcd3e56a34c9d5078be8ed4159, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Agent: {fileID: 2028016436802387789}
-  m_Surface: {fileID: 0}
-  m_Target: {fileID: 0}
-  m_hp: 1
-  m_MaxDistance: 2
-  m_AttackInterval: 5
-  m_AttackTimer: 0
-  m_FryEnemyShot: {fileID: 7876406161454708674}
 --- !u!54 &1977702729019791891
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -113,6 +93,26 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &3183492949267799943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1933333176539356615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 040e0463ca785e14483793d07c3bb2bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Agent: {fileID: 2028016436802387789}
+  m_Surface: {fileID: 0}
+  m_Target: {fileID: 0}
+  m_hp: 1
+  m_MaxDistance: 2
+  m_AttackInterval: 5
+  m_AttackTimer: 0
+  m_FryEnemyShot: {fileID: 3234805337799538687}
 --- !u!1 &3842201423124954960
 GameObject:
   m_ObjectHideFlags: 0
@@ -235,7 +235,7 @@ GameObject:
   - component: {fileID: 1097574969197860456}
   - component: {fileID: 6176977515496780711}
   - component: {fileID: 1249971063043152666}
-  - component: {fileID: 7876406161454708674}
+  - component: {fileID: 3234805337799538687}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -287,7 +287,7 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7876406161454708674
+--- !u!114 &3234805337799538687
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -296,7 +296,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4819938030535217945}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae6bb806226120b41962c451d2a0d279, type: 3}
+  m_Script: {fileID: 11500000, guid: 3f87a806e48529048929403ca42cc1b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EnemyBullet: {fileID: 4229502601087107114, guid: 52fec5905b51250438653a42291c4566, type: 3}
+  m_EnemyBullet: {fileID: 0}

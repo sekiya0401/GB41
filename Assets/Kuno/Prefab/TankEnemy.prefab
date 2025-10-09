@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 2679116284299707558}
   - component: {fileID: 6794804536806796528}
   - component: {fileID: 1909079362723437901}
-  - component: {fileID: 5663078789631822441}
   - component: {fileID: 5680734515968703443}
+  - component: {fileID: 8266218129903341575}
   m_Layer: 0
   m_Name: TankEnemy
   m_TagString: Untagged
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 582767668566288086}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6, y: 1, z: 16}
+  m_LocalPosition: {x: 6, y: 1, z: 5.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -53,7 +53,7 @@ NavMeshAgent:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 582767668566288086}
   m_Enabled: 1
-  m_AgentTypeID: 1479372276
+  m_AgentTypeID: -334000983
   m_Radius: 2
   m_Speed: 1
   m_Acceleration: 1
@@ -67,25 +67,6 @@ NavMeshAgent:
   m_BaseOffset: 2
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &5663078789631822441
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 582767668566288086}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dcd2c8a63040e4941a10853593863ecb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Agent: {fileID: 1909079362723437901}
-  m_Surface: {fileID: 0}
-  m_Target: {fileID: 0}
-  m_Core: {fileID: 0}
-  m_hp: 3
-  m_MaxDistance: 2
-  m_RepathInterval: 0.1
 --- !u!54 &5680734515968703443
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -113,6 +94,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &8266218129903341575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 582767668566288086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdf187fc98cb8ce43b373ec994e8335d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Agent: {fileID: 1909079362723437901}
+  m_Surface: {fileID: 0}
+  m_Target: {fileID: 0}
+  m_hp: 3
+  m_MaxDistance: 2
 --- !u!1 &3365340204081414509
 GameObject:
   m_ObjectHideFlags: 0
