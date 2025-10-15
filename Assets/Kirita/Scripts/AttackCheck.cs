@@ -29,6 +29,16 @@ namespace Prototype.Games
             UpdateState();
         }
 
+        private void Update()
+        {
+            if(m_HealthField is not null)
+            {
+                m_HealthField.transform.LookAt(Camera.main.transform);
+                // 180ìxâÒì]Ç≥ÇπÇƒê≥ñ ÇÉJÉÅÉâÇ…å¸ÇØÇÈ
+                m_HealthField.transform.Rotate(0, 180f, 0);
+            }
+        }
+
         void IDamagable.Damage(int damage)
         {
             m_Health = Mathf.Clamp(m_Health - damage, 0, m_MaxHealth);
@@ -57,7 +67,10 @@ namespace Prototype.Games
                 m_MeshRenderer.material.color = color;
             }
 
-            m_HealthField.text = $"HP:{m_Health}/{m_MaxHealth}";
+            if(m_HealthField is not null)
+            {
+                m_HealthField.text = $"HP:{m_Health}/{m_MaxHealth}";
+            }
         }
 
         /// <summary>

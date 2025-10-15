@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_NetworkRunner: {fileID: 534414205791151217, guid: ecb8e72bd2f23314bbd952b9df822613, type: 3}
   m_PlayerPrefab:
-    RawGuidValue: 2d4f54042f06da04e81a12eb7f19181c
+    RawGuidValue: 00000000000000000000000000000000
   m_FestivalPrefab:
-    RawGuidValue: 51dd7b332a1aa2043a278d1caa03f9e9
+    RawGuidValue: 00000000000000000000000000000000
   m_FestivalSpawnPoint: {fileID: 0}
