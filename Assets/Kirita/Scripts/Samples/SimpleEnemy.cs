@@ -67,6 +67,16 @@ namespace Prototype.Games
             {
                 Runner.Despawn(Object);
             }
+            else
+            {
+                RPC_SelfDespawn();
+            }
+        }
+
+        [Rpc(RpcSources.Proxies,RpcTargets.StateAuthority)]
+        private void RPC_SelfDespawn()
+        {
+            SelfDespawn();
         }
 
         private void OnTriggerEnter(Collider other)
