@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
 using Fusion.Addons.SimpleKCC;
-using TNRD;
 using Unity.Cinemachine;
 using Prototype.Games.UI;
 
@@ -29,7 +28,7 @@ namespace Prototype.Games
         [SerializeField]
         private Transform m_At;
         [SerializeField]
-        private SerializableInterface<IPlayerAction> m_AttackAction;
+        private AttackAction m_AttackAction;
         [SerializeField]
         private SkillAction m_SkillAction;
         [SerializeField]
@@ -160,7 +159,7 @@ namespace Prototype.Games
         {
             if(HasStateAuthority && context.started)
             {
-                m_AttackAction.Value.Action(this);
+                m_AttackAction.Action(this);
             }
         }
 

@@ -547,20 +547,11 @@ MonoBehaviour:
   m_PlayerState: {fileID: 11400000, guid: 2aac4610e4a374947a656a6c4c06c30e, type: 2}
   m_Body: {fileID: 7594257423307879125}
   m_At: {fileID: 6779432669169505061}
-  m_AttackAction:
-    mode: 0
-    unityReference: {fileID: 4533387145225319145}
-    rawReference:
-      rid: -2
+  m_AttackAction: {fileID: 4533387145225319145}
   m_SkillAction: {fileID: 748502537163066936}
   m_Camera: {fileID: 8711359377961070504}
   m_OrbitCamera: {fileID: 1433265829814309344}
   _Health: 0
-  references:
-    version: 2
-    RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
 --- !u!114 &701870278727231892
 MonoBehaviour:
   m_ObjectHideFlags: 0

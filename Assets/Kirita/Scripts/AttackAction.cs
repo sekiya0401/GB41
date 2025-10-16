@@ -22,7 +22,7 @@ namespace Prototype.Games
             m_Renderer.enabled = false;
         }
 
-        void IPlayerAction.Action(Player _player)
+        public void Action(Player _player)
         {
             if(m_IsAttacking is false)
             {
