@@ -6,6 +6,10 @@ namespace Prototype.Games
 {
     public class SimpleSpawner : NetworkBehaviour
     {
+        [SerializeField]
+        private Transform[] m_SpawnPoints;
+        [SerializeField]
+        private Transform m_Target;
         [SerializeField, Range(1f,10f)]
         private float m_SpawnRadius;
         [SerializeField, Min(1f)]
@@ -15,18 +19,11 @@ namespace Prototype.Games
         [SerializeField]
         private SimpleEnemy m_EnemyPrefab;
 
-        private Transform m_Target;
-        private Transform[] m_SpawnPoints;
         private List<SimpleEnemy> m_Enemies;
         private float m_Timer = 0;
 
         public override void Spawned()
         {
-            if (!HasStateAuthority)
-            {
-                return;
-            }
-
             m_Enemies = new List<SimpleEnemy>();
         }
 

@@ -18,14 +18,14 @@ namespace Prototype.Games
         private NetworkRunner m_NetworkRunner;
         [SerializeField]
         private NetworkPrefabRef m_PlayerPrefab;
-        [SerializeField]
-        private NetworkPrefabRef m_SimpleSpawnerPrefab;
-        [SerializeField]
-        private Transform[] m_SpawnPoints;
-        [SerializeField]
-        private NetworkPrefabRef m_FestivalPrefab;
-        [SerializeField]
-        private Transform m_FestivalPoint;
+        //[SerializeField]
+        //private NetworkPrefabRef m_SimpleSpawnerPrefab;
+        //[SerializeField]
+        //private Transform[] m_SpawnPoints;
+        //[SerializeField]
+        //private NetworkPrefabRef m_FestivalPrefab;
+        //[SerializeField]
+        //private Transform m_FestivalPoint;
 
         private async void Start()
         {
@@ -39,7 +39,9 @@ namespace Prototype.Games
             //ゲームスタート
             var result = await networkRunner.StartGame(new StartGameArgs
             {
-                GameMode = GameMode.Shared
+                GameMode = GameMode.Shared,
+                // セッション作成時に、現在のシーンに置かれたシーンオブジェクトをスポーンする
+                Scene = SceneRef.FromIndex(SceneManager.GetActiveScene().buildIndex)
             });
         }
 
@@ -56,15 +58,15 @@ namespace Prototype.Games
                 //プレイヤーの生成
                 runner.Spawn(m_PlayerPrefab, spawnPoint, Quaternion.identity);
 
-                if(runner.IsSharedModeMasterClient)
-                {
-                    var festival = runner.Spawn(m_FestivalPrefab, m_FestivalPoint.position, Quaternion.identity);
-                    var spawner = runner.Spawn(m_SimpleSpawnerPrefab);
-                    if(spawner.TryGetComponent(out SimpleSpawner simpleSpawner))
-                    {
-                        simpleSpawner.Init(festival.transform, m_SpawnPoints);
-                    }
-                }
+                //if(runner.IsSharedModeMasterClient)
+                //{
+                //    var festival = runner.Spawn(m_FestivalPrefab, m_FestivalPoint.position, Quaternion.identity);
+                //    var spawner = runner.Spawn(m_SimpleSpawnerPrefab);
+                //    if(spawner.TryGetComponent(out SimpleSpawner simpleSpawner))
+                //    {
+                //        simpleSpawner.Init(festival.transform, m_SpawnPoints);
+                //    }
+                //}
             }
         }
         void INetworkRunnerCallbacks.OnPlayerLeft(NetworkRunner runner, PlayerRef player) { }

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEditor;
+#if UNITY_EDITOR
 using UnityEditor.SceneManagement;
 
 public class NoiseSpawnerWindow : EditorWindow
@@ -144,3 +145,4 @@ public class NoiseSpawnerWindow : EditorWindow
         SceneView.RepaintAll();
     }
 }
+#endif
