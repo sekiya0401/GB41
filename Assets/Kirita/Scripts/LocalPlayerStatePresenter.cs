@@ -12,6 +12,7 @@ namespace Prototype.Games.UI
     {
         [SerializeField]
         private PlayerStateScriptableObject m_PlayerState;
+        [Header("ステータス")]
         [SerializeField]
         private TextMeshProUGUI m_NameTextMesh;
         [SerializeField]
@@ -22,6 +23,13 @@ namespace Prototype.Games.UI
         private TextMeshProUGUI m_HealthField;
         [SerializeField]
         private TextMeshProUGUI m_StaminaField;
+        [Header("スキル")]
+        [SerializeField]
+        private FloatEventChannelScriptableObject m_SkillPointEventChannel;
+        [SerializeField]
+        private SpriteEventChannelScriptableObject m_SkillIconEventChannel;
+        [SerializeField]
+        private Image m_SkillIcon;
 
         private void Awake()
         {
@@ -70,6 +78,8 @@ namespace Prototype.Games.UI
         {
             m_PlayerState.SubscribeHealthEvent(OnChangedHealth);
             m_PlayerState.SubscribeStaminaEvent(OnChangedStamina);
+            m_SkillPointEventChannel.ChangedValue += OnChangedSkillPoint;
+            m_SkillIconEventChannel.ChangedValue += OnChangedSkillIcon;
         }
 
         /// <summary>
@@ -79,6 +89,8 @@ namespace Prototype.Games.UI
         {
             m_PlayerState.UnsubscribeHealthEvent(OnChangedHealth);
             m_PlayerState.UnsubscribeStaminaEvent(OnChangedStamina);
+            m_SkillPointEventChannel.ChangedValue -= OnChangedSkillPoint;
+            m_SkillIconEventChannel.ChangedValue -= OnChangedSkillIcon;
         }
 
         /// <summary>
@@ -109,6 +121,29 @@ namespace Prototype.Games.UI
         private string AdjustDecimalPoint(in float value)
         {
             return $"{value:F1}";
+        }
+
+        /// <summary>
+        /// スキルポイントの変化を受け取るコールバック
+        /// </summary>
+        /// <param name="value">変化後のスキルポイントの割合</param>
+        private void OnChangedSkillPoint(float value)
+        {
+            if(value >= 1f)
+            {
+                m_SkillIcon.color = Color.red;
+            }
+            else
+            {
+                m_SkillIcon.color = Color.white;
+            }
+
+            m_SkillIcon.fillAmount = value;
+        }
+
+        private void OnChangedSkillIcon(Sprite icon)
+        {
+            m_SkillIcon.sprite = icon; 
         }
     }
 }

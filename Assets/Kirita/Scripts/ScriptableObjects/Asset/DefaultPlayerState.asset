@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75d19e91f5d0c7f4188712d9d7c44009, type: 3}
   m_Name: DefaultPlayerState
   m_EditorClassIdentifier: 
-  m_HorizontalSpeed: 3
-  m_VerticalSpeed: 3
+  m_HorizontalSpeed: 5
+  m_VerticalSpeed: 6
   m_SprintSpeed: 3
   m_BlinkSpeed: 6
   m_Sensitivity: {fileID: 11400000, guid: 1f365f43da42a05428a016f5d2cc3f44, type: 2}
@@ -27,6 +27,6 @@ MonoBehaviour:
   m_Heal: 5
   m_Damage: 5
   m_StaminaDecreaseRate: 1
-  m_StaminaIncreaseRate: 0.5
+  m_StaminaIncreaseRate: 1
   m_AttackDuration: 0.2
   m_AttackInterval: 0.4

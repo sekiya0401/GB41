@@ -48,7 +48,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d932d24ab08e54995fcac4418f0102, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RequiredActivatePoint: 3
+  m_RequiredActivatePoint: 10
+  m_Icon: {fileID: 21300000, guid: 6bf2cc785f91bfd45a01270add6f87e8, type: 3}
   m_Collider: {fileID: 7110671406185548439}
   m_AttackTime: 0.1
   m_Damage: 50
@@ -65,7 +66,7 @@ SphereCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 2
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0

@@ -9,7 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 822cf1bef39befa459c9d229ecd99f44, type: 3}
-  m_Name: Sensitivity
+  m_Script: {fileID: 11500000, guid: 2125e3cf4d76e984585b8734483b2f26, type: 3}
+  m_Name: SkillPointEventChannel
   m_EditorClassIdentifier: 
-  m_Value: {x: 5, y: 5}

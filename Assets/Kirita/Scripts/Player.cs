@@ -34,6 +34,8 @@ namespace Prototype.Games
         private SkillAction m_SkillAction;
         [SerializeField]
         private CinemachineCamera m_Camera;
+        [SerializeField]
+        private CinemachineCamera m_OrbitCamera;
 
         private enum MOVE_STATE
         {
@@ -89,6 +91,7 @@ namespace Prototype.Games
                 OnHealthChanged();
 
                 m_Camera.gameObject.SetActive(false);
+                m_OrbitCamera.gameObject.SetActive(false);
                 var presenter = FindAnyObjectByType<OtherPlayerStatePresenter>();
                 if(presenter)
                 {
@@ -373,7 +376,18 @@ namespace Prototype.Games
             if (HasStateAuthority)
             {
                 Health = m_PlayerState.MaxHealth;
+                m_SkillAction.AddPoint(999);
                 m_IsDead = false;
+            }
+        }
+
+        public void OnChangeCamera(InputAction.CallbackContext context)
+        {
+            if (HasStateAuthority)
+            {
+                bool isCamera = m_Camera.gameObject.activeSelf;
+                m_Camera.gameObject.SetActive(!isCamera);
+                m_OrbitCamera.gameObject.SetActive(isCamera);
             }
         }
     }
