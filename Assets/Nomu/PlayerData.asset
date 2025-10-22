@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bf881436bec6b44a834c293c02ac3dd, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
-  m_SheetUrl: 
+  m_SheetUrl: https://opensheet.elk.sh/1GWpg2-dkJshXBGMZCIKheH4Nin1fxW2I1hPDIHSKmpY/Player
   m_Parameters: []
