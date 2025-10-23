@@ -11,9 +11,9 @@ public class PlayerData : ScriptableObject
 	[System.Serializable]
 	public struct Entry
 	{
-		public string m_Name;
-		public string m_HP;
-		public string m_Attack;
+		public string Name;
+		public string HP;
+		public string Attack;
 	}
 
 	[Header("スプレッドシートURL")]
@@ -40,7 +40,7 @@ public class PlayerData : ScriptableObject
 
 			m_Parameters.Add(entry);
 
-			Debug.Log($"Name:{entry.m_Name} HP:{entry.m_HP} ATK:{entry.m_Attack}");
+			Debug.Log($"Name:{entry.Name} HP:{entry.HP} ATK:{entry.Attack}");
 		}
 
 		EditorUtility.SetDirty(this);
