@@ -10,6 +10,9 @@ public class EnemyDataEditor : Editor
 	private EnemyData m_Loader;
 	private static readonly HttpClient m_Client = new HttpClient();
 
+	/// <summary>
+	/// InspectorのGUIのカスタマイズ
+	/// </summary>
 	public async override void OnInspectorGUI()
 	{
 		// デフォルトのInspector表示
@@ -38,13 +41,20 @@ public class EnemyDataEditor : Editor
 		}
 	}
 
+	/// <summary>
+	/// シートURLを取得しJSONデータを処理
+	/// </summary>
+	/// <param name="loader">データを適用するEnemyData</param>
 	public static async Task GetAndProcess(EnemyData loader)
 	{
 		try
 		{
+			// URLからJSON文字列を取得
 			string json = await m_Client.GetStringAsync(loader.m_SheetUrl);
+
 			if (!string.IsNullOrEmpty(json) && json != "[]")
 			{
+				// JSON文字列をEnemyDataのデータ形式に変換・適用
 				loader.ProcessJson(json);
 				Debug.Log("✅データ取得完了");
 			}
@@ -55,7 +65,8 @@ public class EnemyDataEditor : Editor
 		}
 		catch (HttpRequestException e)
 		{
-			Debug.LogWarning($"HTTPエラー: {e.Message}");
+			// 通信エラー(ネットワーク、URL不正など)が発生した場合の例外処理
+			Debug.LogWarning($"通信エラー: {e.Message}");
 		}
 	}
 }
