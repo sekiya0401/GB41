@@ -16,7 +16,7 @@ public class PlayerStateScriptableObject : ScriptableObject
     [SerializeField, Min(0f)]
     private float m_BlinkSpeed;
     [SerializeField]
-    private Vector2VariableScriptableObject m_Sensitivity;
+    private Vector2Variable m_Sensitivity;
 
     public Vector2 Sensitivity => m_Sensitivity.Value;
     public float HorizontalSpeed => m_HorizontalSpeed;
@@ -34,13 +34,13 @@ public class PlayerStateScriptableObject : ScriptableObject
     [SerializeField]
     private FloatEventChannelScriptableObject m_HealthEvent;
     [SerializeField]
-    private FloatReferenceScriptableObject m_StaminaReference;
+    private NotificationFloat m_Stamina;
 
     public float MaxHealth => m_MaxHealth;
     public float MaxStamina => m_MaxStamina;
     public string SelfName => m_SelfName;
     public FloatEventChannelScriptableObject HealthEvent => m_HealthEvent;
-    public FloatReferenceScriptableObject Stamina => m_StaminaReference;
+    public NotificationFloat Stamina => m_Stamina;
 
     [Header("‚»‚Ì‘¼")]
     [SerializeField, Min(0f)]
@@ -72,18 +72,18 @@ public class PlayerStateScriptableObject : ScriptableObject
 
     public void SubscribeHealthEvent(UnityAction<float> listener) => m_HealthEvent.ChangedValue += listener;
     public void UnsubscribeHealthEvent(UnityAction<float> listener) => m_HealthEvent.ChangedValue += listener;
-    public void SubscribeStaminaEvent(UnityAction<float> listener) => m_StaminaReference.ChangedValue += listener;
-    public void UnsubscribeStaminaEvent(UnityAction<float> listener) => m_StaminaReference.ChangedValue -= listener;
+    public void SubscribeStaminaEvent(UnityAction<float> listener) => m_Stamina.ChangedValue += listener;
+    public void UnsubscribeStaminaEvent(UnityAction<float> listener) => m_Stamina.ChangedValue -= listener;
 
 #if UNITY_EDITOR
     [ContextMenu("ResetReference")]
     private void ResetReference()
     {
-        if (m_StaminaReference is not null)
+        if (m_Stamina is not null)
         {
-            m_StaminaReference.Value = m_MaxStamina;
+            m_Stamina.Value = m_MaxStamina;
         }
-        EditorUtility.SetDirty(m_StaminaReference);
+        EditorUtility.SetDirty(m_Stamina);
         AssetDatabase.SaveAssets();
     }
 #endif

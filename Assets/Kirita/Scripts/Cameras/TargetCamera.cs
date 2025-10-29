@@ -145,17 +145,25 @@ namespace Prototype.Games
                         return;
                     }
 
-                    direction = m_FlexCamera.LookAt.position - m_FlexCamera.transform.position;
-                    Quaternion directionQuat = Quaternion.LookRotation(direction);
                     float t = Time.deltaTime * 5f;
-                    m_PanTilt.PanAxis.Value = Mathf.LerpAngle(m_PanTilt.PanAxis.Value, directionQuat.eulerAngles.y, t);
+
+                    direction = m_FlexCamera.LookAt.position - m_FlexCamera.transform.position;
+                    Vector3 localDirection = m_PanTilt.transform.InverseTransformDirection(direction);
+
+                    // Pan角度を取得
+                    float yaw = Mathf.Atan2(localDirection.x, localDirection.z) * Mathf.Rad2Deg;
+                    m_PanTilt.PanAxis.Value = Mathf.LerpAngle(m_PanTilt.PanAxis.Value, yaw, t);
+
+                    // === Tilt計算 ===
+                    // ローカルZ軸方向を基準にしたピッチ角
+                    float pitch = -Mathf.Atan2(localDirection.y, localDirection.z) * Mathf.Rad2Deg;
 
                     Vector3 vp = Camera.main.WorldToViewportPoint(m_FlexCamera.LookAt.position);
                     float weight = Mathf.Abs(vp.y - 0.5f) * 2f;
                     weight = Mathf.InverseLerp(0.7f, 1f, weight); // 0.5以下→0, 1以上→1
                     weight = Mathf.SmoothStep(0f, 1f, weight);
 
-                    m_PanTilt.TiltAxis.Value = Mathf.LerpAngle(m_PanTilt.TiltAxis.Value, directionQuat.eulerAngles.x, weight * t);
+                    m_PanTilt.TiltAxis.Value = Mathf.LerpAngle(m_PanTilt.TiltAxis.Value, pitch, weight * t);
 
                     m_Target.position = m_FlexCamera.LookAt.position;
 

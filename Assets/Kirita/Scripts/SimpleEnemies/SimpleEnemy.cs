@@ -1,53 +1,53 @@
-using Fusion;
+ï»¿using System.Text;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace Prototype.Games
 {
     [RequireComponent(typeof(NavMeshAgent))]
-    public class SimpleEnemy : NetworkBehaviour,IDamagable
+    public class SimpleEnemy : MonoBehaviour
     {
         [SerializeField]
-        private FloatVariableScriptableObject m_DespawnSpeedThreshold;
+        private FloatVariable m_DespawnSpeedThreshold;
         [SerializeField]
-        private FloatVariableScriptableObject m_DespawnDelay;
-        private float m_DespawnTimer = 0f;
+        private FloatVariable m_DespawnDelay;
+        private float m_DespawnTime = 0f;
         private NavMeshAgent m_Agent;
         private Transform m_Target;
+        private BlockSpawnPoint m_SpawnPoint;
 
-        public override void Spawned()
+        public void Spawned(Transform target, BlockSpawnPoint spawnPoint)
         {
-            if(!HasStateAuthority)
-            {
-                m_Agent.enabled = false;
-            }
+            m_Target = target;
+            m_SpawnPoint = spawnPoint;
+
+            m_Agent.SetDestination(m_Target.position);
         }
 
-        public override void FixedUpdateNetwork()
+        private void Update()
         {
-            if(!HasStateAuthority)
-            {
-                return;
-            }
-
-            // NavMeshAgent ‚Ì‘¬“x‚ðƒ`ƒFƒbƒN
             if (m_Agent.velocity.magnitude < m_DespawnSpeedThreshold.Value)
             {
-                m_DespawnTimer += Runner.DeltaTime;
-                if (m_DespawnTimer >= m_DespawnDelay.Value)
+                m_DespawnTime += Time.deltaTime;
+                if (m_DespawnTime >= m_DespawnDelay.Value)
                 {
                     SelfDespawn();
                 }
             }
             else
             {
-                m_DespawnTimer = 0f;
+                m_DespawnTime = 0f;
+            }
+
+            if (m_Agent.hasPath && m_Agent.remainingDistance < m_Agent.stoppingDistance)
+            {
+                SelfDespawn();
             }
         }
 
         private void Awake()
         {
-            TryGetComponent(out m_Agent); 
+            TryGetComponent(out m_Agent);
         }
 
         public void Init(Transform target)
@@ -56,43 +56,30 @@ namespace Prototype.Games
             m_Agent.SetDestination(target.position);
         }
 
-        public void Damage(int damage)
-        {
-            SelfDespawn();
-        }
-
         private void SelfDespawn()
         {
-            if (HasStateAuthority)
-            {
-                Runner.Despawn(Object);
-            }
-            else
-            {
-                RPC_SelfDespawn();
-            }
+            Debug.Log("SelfDespawn");
+            Destroy(gameObject);
         }
 
-        [Rpc(RpcSources.Proxies,RpcTargets.StateAuthority)]
-        private void RPC_SelfDespawn()
+        private void OnDestroy()
         {
-            SelfDespawn();
+            m_SpawnPoint.Remove(this);
         }
 
-        private void OnTriggerEnter(Collider other)
+        private void OnDrawGizmos()
         {
-            if(other.CompareTag("GameController"))
+            if(!Application.isPlaying)
             {
-                return;
+                return; 
             }
 
-            IDamagable damagable = other.GetComponentInParent<IDamagable>();
-
-            if(damagable is not null)
+            Gizmos.color = Color.magenta;
+            for (int i = 0; i < m_Agent.path.corners.Length - 1; i++)
             {
-                damagable.Damage(1);
-                SelfDespawn();
+                Gizmos.DrawLine(m_Agent.path.corners[i], m_Agent.path.corners[i + 1]);
             }
+            Gizmos.DrawLine(m_Agent.path.corners[m_Agent.path.corners.Length - 1], m_Agent.pathEndPosition);
         }
     }
 }

@@ -3,7 +3,7 @@ using UnityEngine.Events;
 using UnityEditor;
 #endif
 
-public abstract class ReferenceScriptableObject<T> : VariableScriptableObject<T>
+public abstract class NotificationVariable<T> : VariableScriptableObject<T>
 {
     public override T Value
     {

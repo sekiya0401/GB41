@@ -472,7 +472,7 @@ GameObject:
   - component: {fileID: 333608069}
   - component: {fileID: 333608068}
   - component: {fileID: 333608067}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -580,7 +580,7 @@ GameObject:
   - component: {fileID: 363568516}
   - component: {fileID: 363568515}
   - component: {fileID: 363568514}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -925,7 +925,7 @@ MonoBehaviour:
     LookAtTarget: {fileID: 0}
     CustomLookAtTarget: 0
   Lens:
-    FieldOfView: 60.000004
+    FieldOfView: 80
     OrthographicSize: 5
     NearClipPlane: 0.3
     FarClipPlane: 1000
@@ -1118,7 +1118,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 625c14eee3ad46c99df7c7c891ef668a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Damping: {x: 0.2, y: 0.2, z: 0.2}
+  Damping: {x: 1, y: 1, z: 1}
   ShoulderOffset: {x: 0, y: 3, z: 0}
   VerticalArmLength: 0
   CameraSide: 1
@@ -1146,7 +1146,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Priority:
     Enabled: 1
-    m_Value: 0
+    m_Value: 10
   OutputChannel: 1
   StandbyUpdate: 2
   m_StreamingVersion: 20241001
@@ -1205,7 +1205,7 @@ GameObject:
   - component: {fileID: 624579892}
   - component: {fileID: 624579891}
   - component: {fileID: 624579890}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1362,7 +1362,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60.000004
+  field of view: 80
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -1388,8 +1388,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 745186744}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.19080901, y: 0, z: 0, w: 0.9816272}
-  m_LocalPosition: {x: 0, y: 6.6960664, z: -15.651839}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 4.95, z: -13.38}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1701,7 +1701,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Priority:
     Enabled: 1
-    m_Value: 10
+    m_Value: 0
   OutputChannel: 1
   StandbyUpdate: 2
   m_StreamingVersion: 20241001
@@ -1711,7 +1711,7 @@ MonoBehaviour:
     LookAtTarget: {fileID: 0}
     CustomLookAtTarget: 0
   Lens:
-    FieldOfView: 60.000004
+    FieldOfView: 80
     OrthographicSize: 5
     NearClipPlane: 0.3
     FarClipPlane: 1000
@@ -1972,6 +1972,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1122979546}
+  - component: {fileID: 1122979548}
+  - component: {fileID: 1122979547}
+  - component: {fileID: 1122979549}
   m_Layer: 8
   m_Name: CameraRoot
   m_TagString: Untagged
@@ -2001,6 +2004,74 @@ Transform:
   - {fileID: 1345430912}
   m_Father: {fileID: 1977299364}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &1122979547
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1122979545}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 384
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Radius: 30
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1122979548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1122979545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7ef4ce554d72ec488b1160c53f612e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Type: 2
+  m_Collider: {fileID: 1122979547}
+  m_Group: {fileID: 1527158706}
+  m_Target: {fileID: 576346871}
+  m_GroupCamera: {fileID: 1342503769}
+  m_FixedCamera: {fileID: 591582561}
+  m_CameraRoot: {fileID: 1122979546}
+  m_FlexCamera: {fileID: 1345430908}
+--- !u!54 &1122979549
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1122979545}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1342503767
 GameObject:
   m_ObjectHideFlags: 0
@@ -2046,7 +2117,7 @@ MonoBehaviour:
     LookAtTarget: {fileID: 0}
     CustomLookAtTarget: 0
   Lens:
-    FieldOfView: 60.000004
+    FieldOfView: 80
     OrthographicSize: 5
     NearClipPlane: 0.3
     FarClipPlane: 1000
@@ -2243,7 +2314,7 @@ MonoBehaviour:
     LookAtTarget: {fileID: 1527158707}
     CustomLookAtTarget: 0
   Lens:
-    FieldOfView: 60.000004
+    FieldOfView: 80
     OrthographicSize: 5
     NearClipPlane: 0.3
     FarClipPlane: 1000
@@ -2339,7 +2410,7 @@ MonoBehaviour:
   PanAxis:
     Value: 0
     Center: 0
-    Range: {x: -180, y: 180}
+    Range: {x: 0, y: 360}
     Wrap: 1
     Recentering:
       Enabled: 0
@@ -2397,9 +2468,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1527158707}
   - component: {fileID: 1527158706}
-  - component: {fileID: 1527158710}
-  - component: {fileID: 1527158708}
-  - component: {fileID: 1527158709}
   m_Layer: 0
   m_Name: Target Group
   m_TagString: Untagged
@@ -2438,81 +2506,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1527158705}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.95, z: -6.38}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1977299364}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &1527158708
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1527158705}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 384
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Radius: 30
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &1527158709
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1527158705}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &1527158710
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1527158705}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7ef4ce554d72ec488b1160c53f612e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Type: 2
-  m_Collider: {fileID: 1527158708}
-  m_Group: {fileID: 1527158706}
-  m_Target: {fileID: 576346871}
-  m_GroupCamera: {fileID: 1342503769}
-  m_FixedCamera: {fileID: 591582561}
-  m_CameraRoot: {fileID: 1122979546}
-  m_FlexCamera: {fileID: 1345430908}
 --- !u!1 &1824379601
 GameObject:
   m_ObjectHideFlags: 0
@@ -2525,7 +2525,7 @@ GameObject:
   - component: {fileID: 1824379604}
   - component: {fileID: 1824379603}
   - component: {fileID: 1824379602}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2665,7 +2665,7 @@ MonoBehaviour:
     LookAtTarget: {fileID: 0}
     CustomLookAtTarget: 0
   Lens:
-    FieldOfView: 60.000004
+    FieldOfView: 80
     OrthographicSize: 5
     NearClipPlane: 0.3
     FarClipPlane: 1000
@@ -2883,6 +2883,7 @@ Transform:
   m_Children:
   - {fileID: 792887902}
   - {fileID: 1122979546}
+  - {fileID: 1527158707}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1977299365
@@ -2905,11 +2906,14 @@ MonoBehaviour:
   m_FreeLook: {fileID: 883746115}
   m_MarioKartWorldCamera: {fileID: 1894534392}
   m_FollowAndFree: {fileID: 2095501462}
-  m_TargetCamera: {fileID: 1527158710}
+  m_TargetCamera: {fileID: 1122979548}
   m_SplatoonInputAxisController: {fileID: 883746116}
   m_OperationInstructionsField: {fileID: 2054988723}
-  m_MoveSpeed: 27.4
-  m_Mode: 1
+  m_MoveSpeed: 30
+  m_Acceleration: 3
+  m_Cooldown: 0.5
+  m_AcceleratingTime: 1
+  m_Mode: 0
   m_Sensitivity: {x: 5, y: 5}
   m_TiltLimit: {x: -80, y: 80}
   m_RotationSpeed: 5.8
@@ -3323,7 +3327,7 @@ GameObject:
   - component: {fileID: 2057134255}
   - component: {fileID: 2057134254}
   - component: {fileID: 2057134253}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3521,7 +3525,7 @@ MonoBehaviour:
     LookAtTarget: {fileID: 0}
     CustomLookAtTarget: 0
   Lens:
-    FieldOfView: 104
+    FieldOfView: 80
     OrthographicSize: 5
     NearClipPlane: 0.3
     FarClipPlane: 1000
@@ -3776,7 +3780,6 @@ SceneRoots:
   - {fileID: 383231538}
   - {fileID: 125963142}
   - {fileID: 1085130440}
-  - {fileID: 1527158707}
   - {fileID: 576346871}
   - {fileID: 363568517}
   - {fileID: 333608070}

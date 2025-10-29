@@ -24,10 +24,10 @@ public class NoiseSpawnerWindow : EditorWindow
 
     bool m_ClearBeforeSpawn = true;
 
-    [MenuItem("Tools/Noise Spawner (Area Mode)")]
+    [MenuItem("Tools/Noise Spawner")]
     public static void ShowWindow()
     {
-        GetWindow<NoiseSpawnerWindow>("Noise Spawner (Area)");
+        GetWindow<NoiseSpawnerWindow>("Noise Spawner");
     }
 
     void OnGUI()

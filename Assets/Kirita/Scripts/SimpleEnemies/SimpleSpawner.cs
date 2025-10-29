@@ -1,72 +1,123 @@
-using Fusion;
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEditor;
 
 namespace Prototype.Games
 {
-    public class SimpleSpawner : NetworkBehaviour
+    public class SimpleSpawner : MonoBehaviour
     {
+        [Header("基本設定")]
+        [Tooltip("スポーンさせる間隔")]
+        [SerializeField, Min(0)]
+        private int m_Interval = 0;
+        [Tooltip("起動時にスポーンさせるかどうか")]
         [SerializeField]
-        private Transform[] m_SpawnPoints;
+        private bool m_StartSpawn = false;
+        [Tooltip("実際にスポーンを担当するスポーンブロックの配列")]
         [SerializeField]
-        private Transform m_Target;
-        [SerializeField, Range(1f,10f)]
-        private float m_SpawnRadius;
-        [SerializeField, Min(1f)]
-        private float m_SpawnInterval;
-        [SerializeField, Range(1f, 20f)]
-        private int m_SpawnAmount;
-        [SerializeField]
-        private SimpleEnemy m_EnemyPrefab;
+        private BlockSpawnPoint[] m_BlockSpawnPoints;
+        [Tooltip("スポーンさせる限界数、0にするとスポーン停止")]
+        [SerializeField, Range(0, 128)]
+        private int m_MaxSpawnCount = 60;
 
-        private List<SimpleEnemy> m_Enemies;
-        private float m_Timer = 0;
+        [Header("デバック")]
+        [Tooltip("優先的にスポーンさせる番号(-1もしくは配列のサイズより大きい場合は通常のランダムスポーンになる)")]
+        [SerializeField, Min(-1)]
+        private int m_PrioritySpawn = -1;
+        [Tooltip("配列順にスポーンさせるかどうか")]
+        [SerializeField]
+        private bool m_IsOrder = false;
 
-        public override void Spawned()
+        private float m_SpawnTime;
+        private int m_OrderIndex = 0;
+
+        public int MaxSpawnCount => m_MaxSpawnCount;
+        public int TotalSpawnObjectCount
         {
-            m_Enemies = new List<SimpleEnemy>();
+            get;
+            set;
         }
 
-        public override void FixedUpdateNetwork()
+        [ContextMenu("GetBlockSpawnPointChildren")]
+        private void GetSpawnPointChildren()
         {
-            if(!HasStateAuthority)
-            { 
-                return; 
+            List<BlockSpawnPoint> children = new List<BlockSpawnPoint>();
+            for(int i = 0; i < transform.childCount ; i++)
+            {
+                if(transform.GetChild(i).TryGetComponent(out BlockSpawnPoint point))
+                {
+                    children.Add(point);
+                    point.Spawner = this;
+                }
             }
 
-            m_Timer += Runner.DeltaTime;
-            if(m_Timer > m_SpawnInterval)
+            if(m_BlockSpawnPoints.Length > 0)
             {
-                m_Timer = 0;
-                SpawnEnemy();
+                m_BlockSpawnPoints = null;
+            }
+
+            m_BlockSpawnPoints = children.ToArray();
+        }
+
+        private void Start()
+        {
+            foreach(var block in m_BlockSpawnPoints)
+            {
+                block.Spawner = this;
+            }
+
+            if (m_StartSpawn)
+            {
+                Spawn();
             }
         }
 
-        public void Init(Transform target, Transform[] points)
+        private void Spawn()
         {
-            m_Target = target;
-            m_SpawnPoints = points;
+            BlockSpawnPoint block = null;
+            if (m_PrioritySpawn < 0 || m_PrioritySpawn >= m_BlockSpawnPoints.Length)
+            {
+                if(m_IsOrder)
+                {
+                    block = m_BlockSpawnPoints[m_OrderIndex];
+                    m_OrderIndex = m_OrderIndex + 1 >= m_BlockSpawnPoints.Length ? 0 : m_OrderIndex + 1;
+                }
+                else
+                {
+                    block = m_BlockSpawnPoints[UnityEngine.Random.Range(0, m_BlockSpawnPoints.Length)];
+                }
+            }
+            else
+            {
+                block = m_BlockSpawnPoints[m_PrioritySpawn];
+            }
+
+
+            block.Spawn();
         }
 
-        private void SpawnEnemy()
+        private void Update()
         {
-            if(m_SpawnPoints == null || m_SpawnPoints.Length < 1)
+            if(m_MaxSpawnCount == 0)
             {
+                m_SpawnTime = 0;
                 return;
             }
 
-            for(int i = 0; i<m_SpawnAmount ;i++ )
+            m_SpawnTime += Time.deltaTime;
+            if (m_SpawnTime > m_Interval)
             {
-                var point = m_SpawnPoints[Random.Range(0, m_SpawnPoints.Length)];
-                var position = point.position;
-                var rand = UnityEngine.Random.insideUnitCircle * m_SpawnRadius;
-                position.x += rand.x;
-                position.y += rand.y;
+                m_SpawnTime = 0;
 
-                var enemy = Runner.Spawn(m_EnemyPrefab, position, Quaternion.identity);
-                enemy.Init(m_Target);
-                m_Enemies.Add(enemy);
+                Spawn();
             }
+        }
+
+        private void OnGUI()
+        {
+            GUI.color = Color.cyan;
+            GUI.skin.label.fontSize = 28;
+            GUILayout.Label($"Total Object: {TotalSpawnObjectCount}");
         }
     }
 }

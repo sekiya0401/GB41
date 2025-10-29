@@ -16,7 +16,7 @@ public class SensitivityReferenceInputAxisController : InputAxisControllerBase<S
     public class SensitivityReferenceReader : IInputAxisReader
     {
         public InputActionReference m_LookAction;
-        public Vector2VariableScriptableObject m_Sensitivity;
+        public Vector2Variable m_Sensitivity;
         float IInputAxisReader.GetValue(UnityEngine.Object context, IInputAxisOwner.AxisDescriptor.Hints hint)
         {
             float value = hint switch

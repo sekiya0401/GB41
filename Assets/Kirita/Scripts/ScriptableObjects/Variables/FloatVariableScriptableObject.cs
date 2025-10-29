@@ -1,4 +1,4 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "FloatVariable", menuName = "Scriptable Objects/FloatVariable")]
-public class FloatVariableScriptableObject : VariableScriptableObject<float> { }
+public class FloatVariable : VariableScriptableObject<float> { }

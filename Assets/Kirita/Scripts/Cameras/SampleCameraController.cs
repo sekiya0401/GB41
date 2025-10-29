@@ -1,9 +1,9 @@
 ﻿using Prototype.Systems;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.Cinemachine;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -33,8 +33,19 @@ namespace Prototype.Games
         private CinemachineInputAxisController m_SplatoonInputAxisController;
         [SerializeField]
         private TextMeshProUGUI m_OperationInstructionsField;
-        [SerializeField, Range(0.1f, 30.0f)]
+        [SerializeField, Range(0.1f, 70.0f)]
         private float m_MoveSpeed;
+
+        [Header("加速")]
+        [SerializeField,Range(1f,10f)]
+        private float m_Acceleration = 3f;
+        [SerializeField, Min(0f)]
+        private float m_Cooldown = 0.1f;
+        [SerializeField, Min(0f)]
+        private float m_AcceleratingTime = 1f;
+        private Coroutine m_AccelerationCoroutine;
+
+        private CinemachineCamera m_CurrentCamera;
         private CinemachinePanTilt m_PanTilt;
         private CinemachineOrbitalFollow m_OrbitalFollow;
         private CinemachineOrbitalFollow m_FollowAndFreeOrbital;
@@ -75,6 +86,7 @@ namespace Prototype.Games
         private bool m_IsFront = false;
         private bool m_IsRecentering = false;
         private float m_BodyYaw;
+        private float m_SpeedCoefficient = 1f;
 
         [Header("デバック")]
         [SerializeField, Range(0, 512)]
@@ -91,24 +103,17 @@ namespace Prototype.Games
 
         private void Update()
         {
-            switch (m_Mode)
+            Vector3 direction = m_Mode switch
             {
-                case MODE.Follow:
-                    Follow();
-                    break;
-                case MODE.FreeLook:
-                    FreeLook();
-                    break;
-                case MODE.SplatoonStyle:
-                    SplatoonStyle();
-                    break;
-                case MODE.MarioKartWorldStyle:
-                    MarioKartWorldStyle();
-                    break;
-                case MODE.FollowAndFree:
-                    FollowAndFree();
-                    break;
-            }
+                MODE.Follow => Follow(),
+                MODE.FreeLook => FreeLook(),
+                MODE.SplatoonStyle => SplatoonStyle(),
+                MODE.MarioKartWorldStyle => MarioKartWorldStyle(),
+                MODE.FollowAndFree => FollowAndFree(),
+                _ => throw new InvalidOperationException()
+            };
+
+            m_CharacterController.Move(direction * m_MoveSpeed * m_SpeedCoefficient * Time.deltaTime);
 
             if (m_TrailPoints.Count == 0 || Vector3.Distance(m_TrailPoints[^1], transform.position) > 0.2f)
             {
@@ -126,6 +131,7 @@ namespace Prototype.Games
             m_PlayerInput.actions["Activate"].AddPhaseCallbacks(OnActivate, InputActionExtensions.PHASE.STARTED);
             m_PlayerInput.actions["ChangeCamera"].AddAllPhaseCallbacks(OnChangedCamera);
             m_PlayerInput.actions["Target"].AddPhaseCallbacks(OnTarget, InputActionExtensions.PHASE.STARTED);
+            m_PlayerInput.actions["Sprint"].AddPhaseCallbacks(OnAcceleration, InputActionExtensions.PHASE.STARTED);
         }
 
         private void OnDisable()
@@ -137,6 +143,7 @@ namespace Prototype.Games
             m_PlayerInput.actions["Activate"].RemovePhaseCallbacks(OnActivate, InputActionExtensions.PHASE.STARTED);
             m_PlayerInput.actions["ChangeCamera"].RemoveAllPhaseCallbacks(OnChangedCamera);
             m_PlayerInput.actions["Target"].RemovePhaseCallbacks(OnTarget, InputActionExtensions.PHASE.STARTED);
+            m_PlayerInput.actions["Sprint"].RemovePhaseCallbacks(OnAcceleration, InputActionExtensions.PHASE.STARTED);
         }
 
         private void OnMove(InputAction.CallbackContext context)
@@ -231,6 +238,31 @@ namespace Prototype.Games
             }
         }
 
+        private void OnAcceleration(InputAction.CallbackContext context)
+        {
+            if (m_AccelerationCoroutine is null)
+            {
+                StartCoroutine(Acceleration());
+            }
+        }
+
+        private IEnumerator Acceleration()
+        {
+            float elapsed = 0f;
+
+            while (elapsed < m_AcceleratingTime)
+            {
+                float t = elapsed / m_AcceleratingTime;
+                m_SpeedCoefficient = Mathf.Lerp(m_Acceleration, 1, t);
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+
+            yield return new WaitForSeconds(m_Cooldown);
+
+            m_SpeedCoefficient = 1f;
+        }
+
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.magenta;
@@ -240,7 +272,7 @@ namespace Prototype.Games
             }
         }
 
-        private void Follow()
+        private Vector3 Follow()
         {
             transform.Rotate(Vector3.up * m_InputLookValue.x * m_Sensitivity.x * Time.deltaTime);
 
@@ -256,11 +288,10 @@ namespace Prototype.Games
 
             m_CameraRoot.localRotation = Quaternion.Euler(pitch, yaw, 0f);
 
-            Vector3 direction = transform.rotation * m_InputMoveValue;
-            m_CharacterController.Move(direction * m_MoveSpeed * Time.deltaTime);
+            return transform.rotation * m_InputMoveValue;
         }
 
-        private void FreeLook()
+        private Vector3 FreeLook()
         {
             Quaternion rotation = Quaternion.identity;
             Vector3 moveValue = m_InputMoveValue;
@@ -281,11 +312,10 @@ namespace Prototype.Games
                 }
             }
 
-            Vector3 direction = rotation * m_InputMoveValue;
-            m_CharacterController.Move(direction * m_MoveSpeed * Time.deltaTime);
+            return rotation * m_InputMoveValue;
         }
 
-        private void SplatoonStyle()
+        private Vector3 SplatoonStyle()
         {
             if (m_SplatoonInputAxisController.enabled is false)
             {
@@ -327,15 +357,14 @@ namespace Prototype.Games
                 m_MovementTime = Mathf.Min(m_MovementTime + Time.deltaTime, m_HorizontalMovementTime);
             }
 
-            Vector3 direction = rotation * m_InputMoveValue;
-            m_CharacterController.Move(direction * m_MoveSpeed * Time.deltaTime);
+            return rotation * m_InputMoveValue;
         }
 
-        private void MarioKartWorldStyle()
+        private Vector3 MarioKartWorldStyle()
         {
             if (m_InputMoveValue.z < 0.001f)
             {
-                return;
+                return Vector3.zero;
             }
 
             if (m_IsRecentering)
@@ -349,11 +378,10 @@ namespace Prototype.Games
             float yaw = m_IsFront ? 180f : 0f;
             m_CameraRoot.localRotation = Quaternion.Euler(0, yaw, 0f);
 
-            Vector3 direction = transform.rotation * m_InputMoveValue;
-            m_CharacterController.Move(direction * m_MoveSpeed * Time.deltaTime);
+            return transform.rotation * m_InputMoveValue;
         }
 
-        private void FollowAndFree()
+        private Vector3 FollowAndFree()
         {
             Quaternion rotation = Quaternion.Euler(0, Camera.main.transform.eulerAngles.y, 0);
             Vector3 moveValue = m_InputMoveValue;
@@ -375,8 +403,7 @@ namespace Prototype.Games
             m_FollowAndFreeOrbital.HorizontalAxis.Value = Mathf.LerpAngle (m_FollowAndFreeOrbital.HorizontalAxis.Value, m_Body.localRotation.eulerAngles.y, Time.deltaTime * m_RotationSpeed);
 
 
-            Vector3 direction = m_Body.localRotation * m_InputMoveValue;
-            m_CharacterController.Move(direction * m_MoveSpeed * Time.deltaTime);
+            return m_Body.localRotation * m_InputMoveValue;
         }
 
         private void OnValidate()
@@ -388,34 +415,44 @@ namespace Prototype.Games
                     m_FreeLook.Priority = 0;
                     m_MarioKartWorldCamera.Priority = 0;
                     m_FollowAndFree.Priority = 0;
+
+                    m_CurrentCamera = m_ThirdPerson;
                     break;
                 case MODE.FreeLook:
                     m_ThirdPerson.Priority = 0;
                     m_FreeLook.Priority = 10;
                     m_MarioKartWorldCamera.Priority = 0;
                     m_FollowAndFree.Priority = 0;
+
+                    m_CurrentCamera = m_FreeLook;
                     break;
                 case MODE.SplatoonStyle:
                     m_ThirdPerson.Priority = 0;
                     m_FreeLook.Priority = 10;
                     m_MarioKartWorldCamera.Priority = 0;
                     m_FollowAndFree.Priority = 0;
+
+                    m_CurrentCamera = m_FreeLook;
                     break;
                 case MODE.MarioKartWorldStyle:
                     m_ThirdPerson.Priority = 0;
                     m_FreeLook.Priority = 0;
                     m_MarioKartWorldCamera.Priority = 10;
                     m_FollowAndFree.Priority = 0;
+
+                    m_CurrentCamera = m_MarioKartWorldCamera;
                     break;
                 case MODE.FollowAndFree:
                     m_ThirdPerson.Priority = 0;
                     m_FreeLook.Priority = 0;
                     m_MarioKartWorldCamera.Priority = 0;
                     m_FollowAndFree.Priority = 10;
+
+                    m_CurrentCamera = m_FollowAndFree;
                     break;
             }
 
-            if(Application.isPlaying)
+            if (Application.isPlaying)
             {
                 m_CameraRoot.localRotation = Quaternion.identity;
                 m_Body.localRotation = Quaternion.identity;
