@@ -37,7 +37,6 @@ namespace MS.Games
         [SerializeField, Min(0f)]
         private float m_RotateSpeed;
 
-
         private Vector3 m_MoveInputValue;
         private Rigidbody m_Rigidbody;
         private bool m_IsBlink = false;
@@ -55,6 +54,7 @@ namespace MS.Games
             m_PlayerInput.actions["Upward"].AddPhaseCallbacks(OnUpward, InputActionExtensions.PHASE.STARTED | InputActionExtensions.PHASE.CANCELED);
             m_PlayerInput.actions["Downward"].AddPhaseCallbacks(OnDownward, InputActionExtensions.PHASE.STARTED | InputActionExtensions.PHASE.CANCELED);
             m_PlayerInput.actions["Blink"].AddPhaseCallbacks(OnBlink, InputActionExtensions.PHASE.STARTED);
+            m_PlayerInput.actions["Attack"].AddPhaseCallbacks(OnAttack, InputActionExtensions.PHASE.STARTED);
         }
 
 
@@ -65,6 +65,7 @@ namespace MS.Games
             m_PlayerInput.actions["Upward"].RemovePhaseCallbacks(OnUpward, InputActionExtensions.PHASE.STARTED | InputActionExtensions.PHASE.CANCELED);
             m_PlayerInput.actions["Downward"].RemovePhaseCallbacks(OnDownward, InputActionExtensions.PHASE.STARTED | InputActionExtensions.PHASE.CANCELED);
             m_PlayerInput.actions["Blink"].RemovePhaseCallbacks(OnBlink, InputActionExtensions.PHASE.STARTED);
+            m_PlayerInput.actions["Attack"].RemovePhaseCallbacks(OnAttack, InputActionExtensions.PHASE.STARTED);
         }
 
         /// <summary>
@@ -106,6 +107,13 @@ namespace MS.Games
                 m_IsBlink = true;
             }
         }
+
+        private void OnAttack(InputAction.CallbackContext context)
+        {
+
+        }
+
+
         private void Update()
         {
             //“ü—Í‚É‚æ‚é‰ñ“]

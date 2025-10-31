@@ -4,15 +4,13 @@ using UnityEngine.InputSystem;
 using System.Collections;
 using Fusion.Addons.SimpleKCC;
 using Unity.Cinemachine;
-using Prototype.Games.UI;
-
-
+using MS.Games.UI;
 
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
-namespace Prototype.Games
+namespace MS.Games
 {
     /// <summary>
     /// ÉvÉåÉCÉÑÅ[êßå‰

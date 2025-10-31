@@ -1,10 +1,9 @@
 using Fusion;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace Prototype.Games
+namespace MS.Games
 {
     public class BindFieldSkill : SkillMonoBehaviour
     {

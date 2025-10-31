@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Prototype.Games.UI
+namespace MS.Games.UI
 {
     /// <summary>
     /// ローカルプレイヤーのステータスとUIの制御

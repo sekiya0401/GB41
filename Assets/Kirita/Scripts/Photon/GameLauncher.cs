@@ -3,10 +3,9 @@ using Fusion.Sockets;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
-using Prototype.Games.UI;
 using UnityEngine.SceneManagement;
 
-namespace Prototype.Games
+namespace MS.Games
 {
     /// <summary>
     /// ゲームの起動とネットワークランナーの管理を行うランチャー

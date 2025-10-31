@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Prototype.Games
+namespace MS.Games
 {
     /// <summary>
     /// プレイヤーアクションインタフェース

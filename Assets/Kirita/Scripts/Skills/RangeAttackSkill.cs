@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace Prototype.Games
+namespace MS.Games
 {
     public class RangeAttackSkill : SkillMonoBehaviour
     {

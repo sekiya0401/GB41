@@ -1,13 +1,6 @@
 using UnityEngine;
-using UnityEngine.Rendering;
-using System;
 
-
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
-
-namespace Prototype.Games
+namespace MS.Games
 {
     public class SkillAction : MonoBehaviour
     {

@@ -2,7 +2,7 @@ using Fusion;
 using TMPro;
 using UnityEngine;
 
-namespace Prototype.Games
+namespace MS.Games
 {
     /// <summary>
     /// Ç®ç’ÇËêßå‰

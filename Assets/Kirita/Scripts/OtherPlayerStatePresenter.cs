@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Prototype.Games.UI
+namespace MS.Games.UI
 {
     /// <summary>
     /// 他プレイヤーのステータスとUIの制御
