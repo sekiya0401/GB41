@@ -1,8 +1,7 @@
 using System;
-using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Prototype.Systems
+namespace MS.Extensions
 {
     public static class InputActionExtensions
     {

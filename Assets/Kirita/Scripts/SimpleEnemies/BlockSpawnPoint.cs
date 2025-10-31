@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-using Prototype.Systems;
 
 namespace Prototype.Games
 {

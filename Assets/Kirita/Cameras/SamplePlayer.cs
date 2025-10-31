@@ -1,0 +1,168 @@
+using System;
+using System.Collections;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using MS.Extensions;
+
+namespace MS.Games
+{
+    [RequireComponent(typeof(PlayerInput))]
+    public class SamplePlayer : MonoBehaviour
+    {
+        //移動軸
+        enum MOVE_AXIS
+        {
+            World,
+            Camera,
+            Self,
+            Avatar
+        }
+
+        [SerializeField]
+        private PlayerInput m_PlayerInput;
+        [SerializeField]
+        private Transform m_Avatar;
+        [Header("移動")]
+        [SerializeField, Min(0f)]
+        private float m_HorizontalSpeed;
+        [SerializeField, Min(0f)]
+        private float m_VerticalSpeed;
+        [SerializeField]
+        private MOVE_AXIS m_MoveAxis = MOVE_AXIS.Self;
+        [SerializeField, Min(1f)]
+        float m_BlinkSpeed = 2f;
+        [SerializeField, Min(0f)]
+        private float m_BlinkCooldownTime = 0.3f;
+        [Header("回転")]
+        [SerializeField, Min(0f)]
+        private float m_RotateSpeed;
+
+
+        private Vector3 m_MoveInputValue;
+        private Rigidbody m_Rigidbody;
+        private bool m_IsBlink = false;
+        private Coroutine m_BlinkCooldownCoro = null;
+
+        private void Awake()
+        {
+            m_Rigidbody = GetComponent<Rigidbody>();
+        }
+
+        private void OnEnable()
+        {
+            //入力コールバックの追加
+            m_PlayerInput.actions["Move"].AddAllPhaseCallbacks(OnMove);
+            m_PlayerInput.actions["Upward"].AddPhaseCallbacks(OnUpward, InputActionExtensions.PHASE.STARTED | InputActionExtensions.PHASE.CANCELED);
+            m_PlayerInput.actions["Downward"].AddPhaseCallbacks(OnDownward, InputActionExtensions.PHASE.STARTED | InputActionExtensions.PHASE.CANCELED);
+            m_PlayerInput.actions["Blink"].AddPhaseCallbacks(OnBlink, InputActionExtensions.PHASE.STARTED);
+        }
+
+
+        private void OnDisable()
+        {
+            //入力コールバックの削除
+            m_PlayerInput.actions["Move"].RemoveAllPhaseCallbacks(OnMove);
+            m_PlayerInput.actions["Upward"].RemovePhaseCallbacks(OnUpward, InputActionExtensions.PHASE.STARTED | InputActionExtensions.PHASE.CANCELED);
+            m_PlayerInput.actions["Downward"].RemovePhaseCallbacks(OnDownward, InputActionExtensions.PHASE.STARTED | InputActionExtensions.PHASE.CANCELED);
+            m_PlayerInput.actions["Blink"].RemovePhaseCallbacks(OnBlink, InputActionExtensions.PHASE.STARTED);
+        }
+
+        /// <summary>
+        /// 移動コールバック処理
+        /// </summary>
+        /// <param name="context">入力情報</param>
+        private void OnMove(InputAction.CallbackContext context)
+        {
+            Vector2 value = context.ReadValue<Vector2>() * m_HorizontalSpeed;
+            m_MoveInputValue.Set(value.x, m_MoveInputValue.y, value.y);
+        }
+
+        /// <summary>
+        /// 上昇コールバック処理
+        /// </summary>
+        /// <param name="context">入力情報</param>
+        private void OnUpward(InputAction.CallbackContext context)
+        {
+            m_MoveInputValue.y = context.ReadValueAsButton() ? m_VerticalSpeed : 0f;
+        }
+
+        /// <summary>
+        /// 下降コールバック処理
+        /// </summary>
+        /// <param name="context"><入力情報/param>
+        private void OnDownward(InputAction.CallbackContext context)
+        {
+            m_MoveInputValue.y = context.ReadValueAsButton() ? -m_VerticalSpeed : 0f;
+        }
+
+        /// <summary>
+        /// ブリンクコールバック処理
+        /// </summary>
+        /// <param name="context">入力情報</param>
+        private void OnBlink(InputAction.CallbackContext context)
+        {
+            if (m_BlinkCooldownCoro is null)
+            {
+                m_IsBlink = true;
+            }
+        }
+        private void Update()
+        {
+            //入力による回転
+            Vector3 inputValue = m_MoveInputValue;
+            inputValue.y = 0f;
+            if (inputValue.sqrMagnitude > 0.001f)
+            {
+                Vector3 direction = GetAxis() * inputValue;
+                Quaternion rotation = Quaternion.LookRotation(direction);
+                m_Avatar.localRotation = Quaternion.RotateTowards(m_Avatar.localRotation, rotation, m_RotateSpeed * Mathf.Rad2Deg * Time.deltaTime);
+            }
+        }
+
+        private void FixedUpdate()
+        {
+            //移動
+            Vector3 move = GetAxis() * m_MoveInputValue;
+            m_Rigidbody.AddForce(move, ForceMode.Acceleration);
+
+            if(m_IsBlink)
+            {
+                m_Rigidbody.AddForce(move * m_BlinkSpeed, ForceMode.VelocityChange);
+                m_BlinkCooldownCoro = StartCoroutine(BlinkCooldown());
+            }
+        }
+
+        /// <summary>
+        /// 移動軸の取得
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException">未知の値が検知されたときのエラー処理</exception>
+        private Quaternion GetAxis()
+        {
+            return m_MoveAxis switch
+            {
+                MOVE_AXIS.World => Quaternion.identity,
+                MOVE_AXIS.Camera => Quaternion.Euler(0f, Camera.main.transform.eulerAngles.y, 0f),
+                MOVE_AXIS.Self => transform.localRotation,
+                MOVE_AXIS.Avatar => m_Avatar.rotation,
+                _ => throw new NotImplementedException($"未知の値が設定されています {m_MoveAxis}")
+            };
+        }
+
+        private IEnumerator BlinkCooldown()
+        {
+            m_IsBlink = false;
+            yield return new WaitForSeconds(m_BlinkCooldownTime);
+            m_BlinkCooldownCoro = null;
+        }
+
+        //攻撃
+
+        //スキル
+
+        //被ダメージ
+
+        //蘇生
+    }
+
+}

@@ -19,7 +19,7 @@
                     "type": "Value",
                     "id": "6b444451-8a00-4d00-a97e-f47457f736a8",
                     "expectedControlType": "Vector2",
-                    "processors": "",
+                    "processors": "InvertVector2(invertX=false)",
                     "interactions": "",
                     "initialStateCheck": true
                 },
@@ -60,6 +60,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Blink",
+                    "type": "Button",
+                    "id": "37d88082-f7af-4389-9749-371bd9649e42",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Upward",
                     "type": "Button",
                     "id": "65901b98-b2bd-4fa0-af3d-491b39d95b73",
@@ -96,7 +105,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "ChangeCamera",
+                    "name": "ResetCamera",
                     "type": "Button",
                     "id": "7e5fb517-50e2-464d-b171-bf8510086ccb",
                     "expectedControlType": "",
@@ -263,7 +272,7 @@
                     "id": "b3a351e9-763f-49fa-98ec-dad3efd41e72",
                     "path": "<Pointer>/delta",
                     "interactions": "",
-                    "processors": "ScaleVector2(x=3,y=3)",
+                    "processors": "ScaleVector2(x=6,y=6)",
                     "groups": ";Keyboard&Mouse",
                     "action": "Look",
                     "isComposite": false,
@@ -387,6 +396,61 @@
                     "processors": "",
                     "groups": "XR",
                     "action": "Sprint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b20dd652-6bfd-47d3-8431-e87e0383f714",
+                    "path": "<Keyboard>/leftCtrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Blink",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1394d5f2-ee36-4aad-937b-850b9a6eaf98",
+                    "path": "<Keyboard>/leftAlt",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Blink",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5fb8de8f-1d6f-4d13-bb0a-1483372d0e06",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Blink",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d86e2bc5-4d53-4c80-a4bf-39f865c1ad26",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Blink",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a94e00c4-e255-4645-b25f-4185cfa15668",
+                    "path": "<XRController>/trigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "XR",
+                    "action": "Blink",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -551,7 +615,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "ChangeCamera",
+                    "action": "ResetCamera",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -562,7 +626,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
-                    "action": "ChangeCamera",
+                    "action": "ResetCamera",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
