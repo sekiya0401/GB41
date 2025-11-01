@@ -1272,7 +1272,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Priority:
     Enabled: 1
-    m_Value: 1
+    m_Value: 10
   OutputChannel: 1
   StandbyUpdate: 0
   m_StreamingVersion: 20241001
@@ -1441,6 +1441,7 @@ MonoBehaviour:
   m_CameraResetInputActionRef: {fileID: -6089859311940044748, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_Target: {fileID: 276431948}
   m_ResetTime: 0.2
+  m_Threshold: 1e-45
 --- !u!1001 &194076093
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1631,7 +1632,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 276431948}
-  m_Layer: 0
+  - component: {fileID: 276431949}
+  m_Layer: 8
   m_Name: Avatar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1652,8 +1654,34 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1352316114}
+  - {fileID: 308811727}
   m_Father: {fileID: 1300148709}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &276431949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 276431947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 467c621ab888e994c8c2570886459c3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Speed: 100
+  m_MaxCount: 5
+  m_CountUpTime: 2
+  m_CoolDown:
+    rid: 6519586112197361734
+  references:
+    version: 2
+    RefIds:
+    - rid: 6519586112197361734
+      type: {class: TimeCooldown, ns: MS.Systems.CoolDown, asm: Assembly-CSharp}
+      data:
+        m_Owner: {fileID: 0}
+        m_CDTime: 1
 --- !u!1001 &285383519
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1727,6 +1755,102 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0fc9da0cbcac5ba40b7b4f859d04ddce, type: 3}
+--- !u!1 &308811726
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 308811727}
+  - component: {fileID: 308811729}
+  - component: {fileID: 308811728}
+  - component: {fileID: 308811730}
+  m_Layer: 6
+  m_Name: Bite
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &308811727
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 308811726}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.5, y: 0.5, z: -0.5, w: 0.5}
+  m_LocalPosition: {x: 0, y: 0, z: 6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 276431948}
+  m_LocalEulerAnglesHint: {x: 90, y: 90, z: 0}
+--- !u!114 &308811728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 308811726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c2e5ed9ead044640ac0105d3b71fe6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Origin: {fileID: 276431948}
+--- !u!114 &308811729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 308811726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2413729c9fe471b4a8cd90e9aab8c9c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Duration: 0.3
+  m_Damage: 1
+  m_InteractDetector: {fileID: 308811728}
+  m_BiteRange: {fileID: 308811730}
+  m_CoolDown:
+    rid: 6519586112197361735
+  references:
+    version: 2
+    RefIds:
+    - rid: 6519586112197361735
+      type: {class: TimeCooldown, ns: MS.Systems.CoolDown, asm: Assembly-CSharp}
+      data:
+        m_Owner: {fileID: 0}
+        m_CDTime: 2
+--- !u!136 &308811730
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 308811726}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 256
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Radius: 5
+  m_Height: 15
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &321254209 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1334995459600664997, guid: 0fc9da0cbcac5ba40b7b4f859d04ddce, type: 3}
@@ -2347,7 +2471,7 @@ GameObject:
   - component: {fileID: 416663010}
   - component: {fileID: 416663011}
   - component: {fileID: 416663012}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TargetCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2403,7 +2527,7 @@ SphereCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 384
+    m_Bits: 448
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
@@ -3990,8 +4114,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 745186744}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.00013308643, y: 0.000000028925017, z: -3.8495275e-12, w: 1}
-  m_LocalPosition: {x: 0, y: 2.0018632, z: -6.9999995}
+  m_LocalRotation: {x: 0.19080901, y: 0, z: 0, w: 0.9816272}
+  m_LocalPosition: {x: 0, y: 4.6222463, z: -6.4902873}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5619,7 +5743,7 @@ GameObject:
   m_Component:
   - component: {fileID: 986692335}
   - component: {fileID: 986692336}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: CameraRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5653,7 +5777,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49b43f27bbca8b24a88f71a0bd4ce415, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_BaseCameraType: 1
+  m_BaseCameraType: 0
   m_BaseCameraBindList:
   - m_CameraType: 0
     m_Camera: {fileID: 192844070}
@@ -6327,7 +6451,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Priority:
     Enabled: 1
-    m_Value: 10
+    m_Value: 1
   OutputChannel: 1
   StandbyUpdate: 0
   m_StreamingVersion: 20241001
@@ -7390,7 +7514,7 @@ GameObject:
   - component: {fileID: 1300148712}
   - component: {fileID: 1300148711}
   - component: {fileID: 1300148710}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SamplePlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7456,12 +7580,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PlayerInput: {fileID: 1300148712}
   m_Avatar: {fileID: 276431948}
+  m_AttackActionHandler:
+    mode: 0
+    unityReference: {fileID: 308811729}
+    rawReference:
+      rid: -2
+  m_BlinkActionHandler: {fileID: 276431949}
   m_HorizontalSpeed: 50
   m_VerticalSpeed: 40
   m_MoveAxis: 1
-  m_BlinkSpeed: 2
-  m_BlinkCooldownTime: 0.3
   m_RotateSpeed: 3
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!114 &1300148712
 MonoBehaviour:
   m_ObjectHideFlags: 0

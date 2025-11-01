@@ -1,8 +1,8 @@
 using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using MS.Extensions;
+using TNRD;
 
 namespace MS.Games
 {
@@ -22,6 +22,10 @@ namespace MS.Games
         private PlayerInput m_PlayerInput;
         [SerializeField]
         private Transform m_Avatar;
+        [SerializeField]
+        private SerializableInterface<IInputActionHandler> m_AttackActionHandler;
+        [SerializeField]
+        private Blink m_BlinkActionHandler;
         [Header("à⁄ìÆ")]
         [SerializeField, Min(0f)]
         private float m_HorizontalSpeed;
@@ -29,22 +33,20 @@ namespace MS.Games
         private float m_VerticalSpeed;
         [SerializeField]
         private MOVE_AXIS m_MoveAxis = MOVE_AXIS.Self;
-        [SerializeField, Min(1f)]
-        float m_BlinkSpeed = 2f;
-        [SerializeField, Min(0f)]
-        private float m_BlinkCooldownTime = 0.3f;
+
+
+
         [Header("âÒì]")]
         [SerializeField, Min(0f)]
         private float m_RotateSpeed;
 
         private Vector3 m_MoveInputValue;
         private Rigidbody m_Rigidbody;
-        private bool m_IsBlink = false;
-        private Coroutine m_BlinkCooldownCoro = null;
 
         private void Awake()
         {
             m_Rigidbody = GetComponent<Rigidbody>();
+            m_BlinkActionHandler.Init(this);
         }
 
         private void OnEnable()
@@ -102,15 +104,12 @@ namespace MS.Games
         /// <param name="context">ì¸óÕèÓïÒ</param>
         private void OnBlink(InputAction.CallbackContext context)
         {
-            if (m_BlinkCooldownCoro is null)
-            {
-                m_IsBlink = true;
-            }
+            m_BlinkActionHandler.Action(context);
         }
 
         private void OnAttack(InputAction.CallbackContext context)
         {
-
+            m_AttackActionHandler.Value.Action(context);
         }
 
 
@@ -129,15 +128,14 @@ namespace MS.Games
 
         private void FixedUpdate()
         {
+            if(m_MoveInputValue.sqrMagnitude <= 0f)
+            {
+                return;
+            }
+
             //à⁄ìÆ
             Vector3 move = GetAxis() * m_MoveInputValue;
             m_Rigidbody.AddForce(move, ForceMode.Acceleration);
-
-            if(m_IsBlink)
-            {
-                m_Rigidbody.AddForce(move * m_BlinkSpeed, ForceMode.VelocityChange);
-                m_BlinkCooldownCoro = StartCoroutine(BlinkCooldown());
-            }
         }
 
         /// <summary>
@@ -157,20 +155,15 @@ namespace MS.Games
             };
         }
 
-        private IEnumerator BlinkCooldown()
-        {
-            m_IsBlink = false;
-            yield return new WaitForSeconds(m_BlinkCooldownTime);
-            m_BlinkCooldownCoro = null;
-        }
-
-        //çUåÇ
-
         //ÉXÉLÉã
 
         //îÌÉ_ÉÅÅ[ÉW
 
         //ëhê∂
+
+        private void OnGUI()
+        {
+        }
     }
 
 }
