@@ -1,5 +1,5 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-[CreateAssetMenu(fileName = "NotificationFloat", menuName = "Scriptable Objects/NotificationFloat")]
+[CreateAssetMenu(fileName = "NotificationFloat", menuName = "Scriptable Objects/Notification/Float")]
 public class NotificationFloat : NotificationVariable<float> { }

@@ -1,34 +1,8 @@
-using UnityEngine;
-using Unity.VisualScripting;
-using JetBrains.Annotations;
-
-
 #if UNITY_EDITOR
 using UnityEditor;
-#endif
+using UnityEngine;
 
-
-[System.Serializable]
-public abstract class ReferenceVariable<T>
-{
-    [SerializeField]
-    protected T m_ConstantValue;
-    [SerializeField]
-    protected VariableScriptableObject<T> m_Variable;
-    [SerializeField]
-    private bool m_IsUseConstant = true;
-
-    public T Value => m_IsUseConstant ? m_ConstantValue : m_Variable.Value;
-}
-
-[System.Serializable]
-public class FloatReference : ReferenceVariable<float> { }
-[System.Serializable]
-public class IntReference : ReferenceVariable<int> { }
-
-
-#if UNITY_EDITOR
-[CustomPropertyDrawer(typeof(ReferenceVariable<>),true)]
+[CustomPropertyDrawer(typeof(ReferenceVariable<>), true)]
 public class ReferenceVariablePropertyDrawer : PropertyDrawer
 {
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
@@ -43,7 +17,7 @@ public class ReferenceVariablePropertyDrawer : PropertyDrawer
 
         EditorGUI.BeginChangeCheck();
 
-        if(isUseConstantProp.boolValue)
+        if (isUseConstantProp.boolValue)
         {
             EditorGUI.PropertyField(rect, constantProp, GUIContent.none);
         }
@@ -52,7 +26,7 @@ public class ReferenceVariablePropertyDrawer : PropertyDrawer
             EditorGUI.PropertyField(rect, variableProp, GUIContent.none);
         }
 
-        if(EditorGUI.EndChangeCheck())
+        if (EditorGUI.EndChangeCheck())
         {
             property.serializedObject.ApplyModifiedProperties();
         }
@@ -81,7 +55,8 @@ public class ReferenceVariablePropertyDrawer : PropertyDrawer
             e.Use();
         }
 
-        EditorGUI.EndProperty();    
+        EditorGUI.EndProperty();
     }
 }
 #endif
+

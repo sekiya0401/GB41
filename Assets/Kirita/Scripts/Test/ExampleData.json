@@ -1,0 +1,11 @@
+{
+  "m_State": {
+    "m_Health": {
+      "m_Value": 100
+    },
+    "m_Stamina": {
+      "m_Value": 100.0
+    }
+  },
+  "m_DataName": "ABC"
+}

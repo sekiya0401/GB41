@@ -1,4 +1,4 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "IntVariable", menuName = "Scriptable Objects/IntVariable")]
+[CreateAssetMenu(fileName = "IntVariable", menuName = "Scriptable Objects/Variable/Int")]
 public class IntVariable : VariableScriptableObject<int>{}

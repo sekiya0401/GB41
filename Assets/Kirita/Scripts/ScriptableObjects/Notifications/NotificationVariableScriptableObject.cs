@@ -1,7 +1,4 @@
 using UnityEngine.Events;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 
 public abstract class NotificationVariable<T> : VariableScriptableObject<T>
 {
