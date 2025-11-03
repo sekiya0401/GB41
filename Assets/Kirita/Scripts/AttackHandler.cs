@@ -4,8 +4,9 @@ namespace MS.Games
 {
     public class AttackHandler : MonoBehaviour
     {
+        [SerializeField,Range(0,10)]
+        private int m_Damage = 1;
         private Collider m_AttackArea;
-        private int m_Damage = 0;
 
         private void Awake()
         {
@@ -13,9 +14,8 @@ namespace MS.Games
             m_AttackArea.enabled = false;
         }
 
-        public void Attack(int damage)
+        public void Attack()
         {
-            m_Damage = damage;
             m_AttackArea.enabled = true;
         }
 

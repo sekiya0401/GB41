@@ -7,8 +7,6 @@ namespace MS.Games
 {
     public class Bite : MonoBehaviour, IInputActionHandler
     {
-        [SerializeField, Min(0)]
-        private int m_Damage = 1;
         [SerializeField, Min(1)]
         private int m_MaxConsecutive = 1;
         [SerializeField]
@@ -56,6 +54,8 @@ namespace MS.Games
             if(m_ReviveHandler.IsRevivableTarget())
             {
                 m_ReviveHandler.Revive(this);
+
+                Debug.Log("Start Revive");
             }
 
             if (State == STATE.WAIT || State == STATE.CHAIN)
@@ -67,6 +67,8 @@ namespace MS.Games
                 }
 
                 m_AttackCoroutine = StartCoroutine(Attack());
+
+                Debug.Log("Start Attack");
             }
         }
 
@@ -80,7 +82,7 @@ namespace MS.Games
             m_ConsecutiveCount++;
 
             Debug.Log($"{m_ConsecutiveCount}Œ‚–Ú");
-            m_AttackHandler.Attack(m_Damage);
+            m_AttackHandler.Attack();
             yield return new WaitForFixedUpdate();
 
             m_AttackHandler.Finish();

@@ -2,6 +2,7 @@ using MS.Systems;
 using MS.Systems.CoolDown;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 namespace MS.Games
@@ -10,6 +11,8 @@ namespace MS.Games
     {
         [SerializeReference]
         private CooldownBase m_Revive = new TimeCooldown();
+        [SerializeField]
+        private TextMeshProUGUI m_Active;
         private HashSet<IActivatable> m_ReviveTargetHashSet = new();
 
         private void Awake()
@@ -25,6 +28,23 @@ namespace MS.Games
         public void Revive(Bite owner)
         {
             StartCoroutine(WaitReviveFinish(owner));
+        }
+
+        private void FixedUpdate()
+        {
+            if(m_Active is null)
+            {
+                return;
+            }
+
+            if(m_ReviveTargetHashSet.Count > 0)
+            {
+                m_Active.text = "ëhê∂ëŒè€Ç†ÇË";
+            }
+            else
+            {
+                m_Active.text = "";
+            }
         }
 
         private void OnTriggerEnter(Collider other)
