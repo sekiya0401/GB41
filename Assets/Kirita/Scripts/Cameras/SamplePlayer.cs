@@ -3,11 +3,12 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using MS.Extensions;
 using TNRD;
+using MS.Systems;
 
 namespace MS.Games
 {
     [RequireComponent(typeof(PlayerInput))]
-    public class SamplePlayer : MonoBehaviour
+    public class SamplePlayer : MonoBehaviour,IDamagable,IActivatable
     {
         //移動軸
         enum MOVE_AXIS
@@ -25,6 +26,8 @@ namespace MS.Games
         [SerializeField]
         private SerializableInterface<IInputActionHandler> m_AttackActionHandler;
         [SerializeField]
+        private SerializableInterface<IInputActionHandler> m_SkillActionHandler;
+        [SerializeField]
         private Blink m_BlinkActionHandler;
         [Header("移動")]
         [SerializeField, Min(0f)]
@@ -39,6 +42,11 @@ namespace MS.Games
         [Header("回転")]
         [SerializeField, Min(0f)]
         private float m_RotateSpeed;
+
+        [Header("ステータス")]
+        [SerializeField]
+        private short m_MaxHealth;
+        private short m_Health;
 
         private Vector3 m_MoveInputValue;
         private Rigidbody m_Rigidbody;
@@ -56,7 +64,10 @@ namespace MS.Games
             m_PlayerInput.actions["Upward"].AddPhaseCallbacks(OnUpward, InputActionExtensions.PHASE.STARTED | InputActionExtensions.PHASE.CANCELED);
             m_PlayerInput.actions["Downward"].AddPhaseCallbacks(OnDownward, InputActionExtensions.PHASE.STARTED | InputActionExtensions.PHASE.CANCELED);
             m_PlayerInput.actions["Blink"].AddPhaseCallbacks(OnBlink, InputActionExtensions.PHASE.STARTED);
-            m_PlayerInput.actions["Attack"].AddPhaseCallbacks(OnAttack, InputActionExtensions.PHASE.STARTED);
+            m_PlayerInput.actions["Attack"].AddAllPhaseCallbacks(OnAttack);
+            m_PlayerInput.actions["Skill"].AddAllPhaseCallbacks(OnSkill);
+
+            m_Health = m_MaxHealth;
         }
 
 
@@ -67,7 +78,8 @@ namespace MS.Games
             m_PlayerInput.actions["Upward"].RemovePhaseCallbacks(OnUpward, InputActionExtensions.PHASE.STARTED | InputActionExtensions.PHASE.CANCELED);
             m_PlayerInput.actions["Downward"].RemovePhaseCallbacks(OnDownward, InputActionExtensions.PHASE.STARTED | InputActionExtensions.PHASE.CANCELED);
             m_PlayerInput.actions["Blink"].RemovePhaseCallbacks(OnBlink, InputActionExtensions.PHASE.STARTED);
-            m_PlayerInput.actions["Attack"].RemovePhaseCallbacks(OnAttack, InputActionExtensions.PHASE.STARTED);
+            m_PlayerInput.actions["Attack"].RemoveAllPhaseCallbacks(OnAttack);
+            m_PlayerInput.actions["Skill"].RemoveAllPhaseCallbacks(OnSkill);
         }
 
         /// <summary>
@@ -112,6 +124,10 @@ namespace MS.Games
             m_AttackActionHandler.Value.Action(context);
         }
 
+        private void OnSkill(InputAction.CallbackContext context)
+        {
+            m_SkillActionHandler.Value.Action(context);
+        }
 
         private void Update()
         {
@@ -141,7 +157,7 @@ namespace MS.Games
         /// <summary>
         /// 移動軸の取得
         /// </summary>
-        /// <returns></returns>
+        /// <returns>移動軸となるQuaternion</returns>
         /// <exception cref="NotImplementedException">未知の値が検知されたときのエラー処理</exception>
         private Quaternion GetAxis()
         {
@@ -155,14 +171,44 @@ namespace MS.Games
             };
         }
 
-        //スキル
+        public void Damage(int damage)
+        {
+            short damaged = (short)(m_Health - damage);
+            m_Health = Math.Max(damaged, (short)0);
 
-        //被ダメージ
-
-        //蘇生
+            if(m_Health <= 0)
+            {
+                Disable();
+            }
+        }
 
         private void OnGUI()
         {
+            //GUI.color = Color.red;
+            //GUI.skin.label.fontSize = 36;
+
+            //GUILayout.Label($"{m_Health}");
+            //m_BlinkActionHandler.ShowState();
+        }
+
+        public void Enable()
+        {
+            enabled = true;
+        }
+
+        public bool IsEnabled()
+        {
+            return enabled ? true : false;
+        }
+
+        public void Disable()
+        {
+            enabled = false;
+        }
+
+        public bool IsDisabled()
+        {
+            return enabled ? false : true;
         }
     }
 

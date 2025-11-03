@@ -82,10 +82,8 @@ public class Blink : MonoBehaviour, IInputActionHandler
         }
     }
 
-    public void OnGUI()
+    public void ShowState()
     {
-        GUI.color = Color.cyan;
-        GUI.skin.label.fontSize = 28;
         GUILayout.Label($"BlinkCountTimer: {m_CountTimer}");
         GUILayout.Label($"BlinkCount: {m_Count}");
     }
