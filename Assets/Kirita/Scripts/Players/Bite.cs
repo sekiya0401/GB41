@@ -7,8 +7,8 @@ namespace MS.Games
 {
     public class Bite : MonoBehaviour, IInputActionHandler
     {
-        [SerializeField, Min(1)]
-        private int m_MaxConsecutive = 1;
+        [SerializeField]
+        private BiteParameters m_Parameters;
         [SerializeField]
         private AttackHandler m_AttackHandler;
         [SerializeField]
@@ -16,9 +16,9 @@ namespace MS.Games
         [SerializeReference]
         private CooldownBase m_CoolDown = new TimeCooldown();
         [SerializeReference]
-        private CooldownBase m_Consecutive = new TimeCooldown();
+        private CooldownBase m_ConsecutiveAttacksMotionWait = new TimeCooldown();
         [SerializeReference]
-        private CooldownBase m_Stay = new TimeCooldown();
+        private CooldownBase m_ConsecutiveAttacksInputWait = new TimeCooldown();
 
         private int m_ConsecutiveCount = 0;
         public enum STATE
@@ -40,8 +40,8 @@ namespace MS.Games
         private void Awake()
         {
             m_CoolDown.m_Owner = this;
-            m_Consecutive.m_Owner = this;
-            m_Stay.m_Owner = this;
+            m_ConsecutiveAttacksMotionWait.m_Owner = this;
+            m_ConsecutiveAttacksInputWait.m_Owner = this;
         }
 
         public void Action(InputAction.CallbackContext context)
@@ -51,7 +51,7 @@ namespace MS.Games
                 return;
             }
 
-            if(m_ReviveHandler.IsRevivableTarget())
+            if(m_ReviveHandler.IsRevivableTarget)
             {
                 m_ReviveHandler.Revive(this);
 
@@ -86,15 +86,15 @@ namespace MS.Games
             yield return new WaitForFixedUpdate();
 
             m_AttackHandler.Finish();
-            if(m_ConsecutiveCount < m_MaxConsecutive)
+            if(m_ConsecutiveCount < m_Parameters.m_MaxConsecutiveAttacksCount)
             {
                 State = STATE.STAY;
-                m_Stay.StartCooldown();
-                yield return new WaitUntil(() => m_Stay.IsComplete());
+                m_ConsecutiveAttacksInputWait.StartCooldown();
+                yield return new WaitUntil(() => m_ConsecutiveAttacksInputWait.IsComplete());
 
                 State = STATE.CHAIN;
-                m_Consecutive.StartCooldown();
-                yield return new WaitUntil(() => m_Consecutive.IsComplete());
+                m_ConsecutiveAttacksMotionWait.StartCooldown();
+                yield return new WaitUntil(() => m_ConsecutiveAttacksMotionWait.IsComplete());
 
                 yield return StartCoroutine(StartCooldown());
             }
@@ -115,19 +115,10 @@ namespace MS.Games
         }
 
 #if UNITY_EDITOR
-        private void OnGUI()
-        {
-            GUI.color = Color.red;
-            GUI.skin.label.fontSize = 36;
-
-            GUILayout.Label($"連続攻撃数: {m_ConsecutiveCount}");
-            GUILayout.Label($"ステート: {State}");
-        }
-
         private void OnDrawGizmosSelected()
         {
             Color color;
-            if (State == STATE.COOLDOWN && m_ConsecutiveCount < m_MaxConsecutive)
+            if (State == STATE.COOLDOWN && m_ConsecutiveCount < m_Parameters.m_MaxConsecutiveAttacksCount)
             {
                 color = Color.magenta;
             }

@@ -1,8 +1,8 @@
-﻿using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
+using MS.SO.Variable;
 
-namespace Prototype.Games
+namespace MS.Games
 {
     [RequireComponent(typeof(NavMeshAgent))]
     public class SimpleEnemy : MonoBehaviour

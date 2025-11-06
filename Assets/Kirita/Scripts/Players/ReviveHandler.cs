@@ -2,7 +2,6 @@ using MS.Systems;
 using MS.Systems.CoolDown;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 namespace MS.Games
@@ -11,18 +10,13 @@ namespace MS.Games
     {
         [SerializeReference]
         private CooldownBase m_Revive = new TimeCooldown();
-        [SerializeField]
-        private TextMeshProUGUI m_Active;
         private HashSet<IActivatable> m_ReviveTargetHashSet = new();
+
+        public bool IsRevivableTarget => m_ReviveTargetHashSet.Count > 0;
 
         private void Awake()
         {
             m_Revive.m_Owner = this;
-        }
-
-        public bool IsRevivableTarget()
-        {
-            return m_ReviveTargetHashSet.Count > 0;
         }
 
         public void Revive(Bite owner)
@@ -30,27 +24,10 @@ namespace MS.Games
             StartCoroutine(WaitReviveFinish(owner));
         }
 
-        private void FixedUpdate()
-        {
-            if(m_Active is null)
-            {
-                return;
-            }
-
-            if(m_ReviveTargetHashSet.Count > 0)
-            {
-                m_Active.text = "ëhê∂ëŒè€Ç†ÇË";
-            }
-            else
-            {
-                m_Active.text = "";
-            }
-        }
-
         private void OnTriggerEnter(Collider other)
         {
-            if (other.TryGetComponent(out IActivatable activatable)
-                && activatable.IsDisabled())
+            IActivatable activatable = other.GetComponentInParent<IActivatable>();
+            if (activatable != null && activatable.IsDisabled())
             {
                 m_ReviveTargetHashSet.Add(activatable);
             }
@@ -58,7 +35,8 @@ namespace MS.Games
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.TryGetComponent(out IActivatable activatable))
+            IActivatable activatable = other.GetComponentInParent<IActivatable>();
+            if (activatable != null)
             {
                 m_ReviveTargetHashSet.Remove(activatable);
             }
@@ -80,5 +58,16 @@ namespace MS.Games
 
             owner.State = Bite.STATE.WAIT;
         }
+
+#if UNITY_EDITOR
+        private void OnDrawGizmos()
+        {
+            if(IsRevivableTarget)
+            {
+                Gizmos.color = Color.yellow;
+                Gizmos.DrawWireCube(transform.position, Vector3.one * 5f);
+            }
+        }
+#endif
     }
 }

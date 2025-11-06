@@ -1,23 +1,21 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public abstract class EventChannelScriptableObject<T> : ScriptableObject
+namespace MS.SO.EventChannel
 {
-    private event UnityAction<T> m_ChangedValueAction;
-
-    public event UnityAction<T> ChangedValue
+    public abstract class EventChannelScriptableObject<T> : ScriptableObject
     {
-        add => m_ChangedValueAction += value;
-        remove => m_ChangedValueAction -= value;
-    }
+        private event UnityAction<T> m_ChangedValueAction;
 
-    public void Invoke(T value)
-    {
-        m_ChangedValueAction?.Invoke(value);
-    }
+        public event UnityAction<T> ChangedValue
+        {
+            add => m_ChangedValueAction += value;
+            remove => m_ChangedValueAction -= value;
+        }
 
-    protected virtual void OnDestroy()
-    {
-        Debug.Log("EventChannel On Destroy");
+        public void Invoke(T value)
+        {
+            m_ChangedValueAction?.Invoke(value);
+        }
     }
 }

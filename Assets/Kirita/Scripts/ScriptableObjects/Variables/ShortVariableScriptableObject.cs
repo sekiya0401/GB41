@@ -1,5 +1,7 @@
 using UnityEngine;
 
-
-[CreateAssetMenu(fileName = "ShortVariable", menuName = "Scriptable Objects/Variable/Short")]
-public class ShortVariable : VariableScriptableObject<short> { }
+namespace MS.SO.Variable
+{
+    [CreateAssetMenu(fileName = "ShortVariable", menuName = "Scriptable Objects/Variable/Short")]
+    public class ShortVariable : VariableScriptableObject<short> { }
+}

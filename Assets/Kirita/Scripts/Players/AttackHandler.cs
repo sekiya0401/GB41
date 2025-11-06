@@ -4,8 +4,8 @@ namespace MS.Games
 {
     public class AttackHandler : MonoBehaviour
     {
-        [SerializeField,Range(0,10)]
-        private int m_Damage = 1;
+        [SerializeField]
+        private IntReference m_Damage;
         private Collider m_AttackArea;
 
         private void Awake()
@@ -28,7 +28,7 @@ namespace MS.Games
         {
             if(other.TryGetComponent(out IDamagable damagable))
             {
-                damagable.Damage(m_Damage);
+                damagable.Damage(m_Damage.Value);
             }
         }
     }

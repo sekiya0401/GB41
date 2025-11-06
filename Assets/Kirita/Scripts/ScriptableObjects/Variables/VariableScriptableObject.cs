@@ -1,13 +1,16 @@
 using UnityEngine;
 
-public abstract class VariableScriptableObject<T> : ScriptableObject
+namespace MS.SO.Variable
 {
-    [SerializeField]
-    protected T m_Value;
-
-    public virtual T Value
+    public abstract class VariableScriptableObject<T> : ScriptableObject
     {
-        get => m_Value;
-        set => m_Value = value;
+        [SerializeField]
+        protected T m_Value;
+
+        public virtual T Value
+        {
+            get => m_Value;
+            set => m_Value = value;
+        }
     }
 }

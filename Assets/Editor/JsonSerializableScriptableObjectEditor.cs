@@ -55,6 +55,8 @@ public class JsonSerializableScriptableObjectEditor : Editor
                 }
             }
         }
+
+        EditorGUILayout.Space();
     }
 }
 #endif

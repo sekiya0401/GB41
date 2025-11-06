@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-namespace Prototype.Games
+namespace MS.Games
 {
     public class BlockSpawnPoint : MonoBehaviour
     {

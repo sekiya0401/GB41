@@ -1,90 +1,77 @@
 using MS.Games;
 using MS.Systems.CoolDown;
-using System.Data;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 public class Blink : MonoBehaviour, IInputActionHandler
 {
-    [SerializeField, Min(1f)]
-    float m_Speed = 2f;
-    [SerializeField, Min(0)]
-    private int m_MaxCount = 5;
-    [SerializeField, Min(0f)]
-    private float m_CountUpTime = 1f;
+    [SerializeField]
+    private BlinkParameters m_Parameters;
     [SerializeReference]
     private CooldownBase m_CoolDown = new TimeCooldown();
 
-    private Rigidbody m_Rigidbody;
-    private int m_Count = 0;
-    private float m_CountTimer = 0f;
+    private Rigidbody m_Rigidbody = null;
     private bool m_IsBlink = false;
+    private Coroutine m_RestoreCoroutine = null;
+
 
     private void Awake()
     {
         m_Rigidbody = GetComponentInParent<Rigidbody>();
+
+        m_CoolDown.m_Owner = this;
     }
 
-    public void Init(MonoBehaviour owner)
+    private void Start()
     {
-        m_CoolDown.m_Owner = owner;
-        m_Count = m_MaxCount;
-    }
-
-    public void Action(InputAction.CallbackContext context)
-    {
-        if (!m_CoolDown.IsComplete() || m_Count <= 0 || m_IsBlink)
-        {
-            return;
-        }
-
-        m_CoolDown.StartCooldown();
-        m_Count--;
-        m_IsBlink = true;
-    }
-
-    public bool IsBlink()
-    {
-        if(m_IsBlink)
-        {
-            m_IsBlink = false;
-            return true;
-        }
-
-        return false;
-    }
-
-    public void Update()
-    {
-        if (m_Count < m_MaxCount)
-        {
-            if (m_CountTimer + Time.deltaTime > m_CountUpTime)
-            {
-                m_Count++;
-
-                if (m_Count >= m_MaxCount)
-                {
-                    m_CountTimer = 0;
-                    return;
-                }
-            }
-
-            m_CountTimer = Mathf.Repeat(m_CountTimer + Time.deltaTime, m_CountUpTime);
-        }
+        m_Parameters.Count = m_Parameters.MaxCount;
     }
 
     private void FixedUpdate()
     {
         if(m_IsBlink)
         {
-            m_Rigidbody.AddForce(transform.forward * m_Speed, ForceMode.VelocityChange);
+            m_Rigidbody.AddForce(transform.forward * m_Parameters.m_Speed, ForceMode.VelocityChange);
             m_IsBlink = false;
+            
+            if(m_RestoreCoroutine is null)
+            {
+                m_RestoreCoroutine = StartCoroutine(RestoreBlinkCount());
+            }
         }
     }
 
-    public void ShowState()
+    public void Action(InputAction.CallbackContext context)
     {
-        GUILayout.Label($"BlinkCountTimer: {m_CountTimer}");
-        GUILayout.Label($"BlinkCount: {m_Count}");
+        if (!m_CoolDown.IsComplete() || m_Parameters.Count <= 0 || m_IsBlink)
+        {
+            return;
+        }
+
+        m_CoolDown.StartCooldown();
+        m_Parameters.Count--;
+        m_IsBlink = true;
+    }
+
+    /// <summary>
+    /// ブリンク使用回数の回復
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator RestoreBlinkCount()
+    {
+        yield return new WaitForSeconds(m_Parameters.m_CountRestorationTime);
+
+        m_Parameters.Count++;
+
+        //ブリンク回数が最大数じゃなかったら
+        if(m_Parameters.Count < m_Parameters.MaxCount)
+        {
+            StartCoroutine(RestoreBlinkCount());
+        }
+        else
+        {
+            m_RestoreCoroutine = null;  
+        }
     }
 }

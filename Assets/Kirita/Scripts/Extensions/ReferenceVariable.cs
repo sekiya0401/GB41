@@ -1,4 +1,5 @@
 using UnityEngine;
+using MS.SO.Variable;
 
 [System.Serializable]
 public abstract class ReferenceVariable<T>

@@ -1,22 +1,26 @@
 using UnityEngine.Events;
+using MS.SO.Variable;
 
-public abstract class NotificationVariable<T> : VariableScriptableObject<T>
+namespace MS.SO.Notification
 {
-    public override T Value
+    public abstract class NotificationVariableScriptableObject<T> : VariableScriptableObject<T>
     {
-        get => m_Value;
-        set
+        public override T Value
         {
-            m_Value = value;
-            m_ChangedValueAction?.Invoke(m_Value);
+            get => m_Value;
+            set
+            {
+                m_ChangedValueAction?.Invoke(m_Value, value);
+                m_Value = value;
+            }
         }
-    }
 
-    private event UnityAction<T> m_ChangedValueAction;
+        private event UnityAction<T, T> m_ChangedValueAction;
 
-    public event UnityAction<T> ChangedValue
-    {
-        add => m_ChangedValueAction += value;
-        remove => m_ChangedValueAction -= value;
+        public event UnityAction<T, T> ChangedValue
+        {
+            add => m_ChangedValueAction += value;
+            remove => m_ChangedValueAction -= value;
+        }
     }
 }

@@ -10,8 +10,6 @@ namespace MS.Games
     {
         [SerializeField,Range(0,10)]
         private int m_Damage = 3;
-        [SerializeField]
-        private Image m_Active;
         private Collider m_AttackArea;
 
         private void Awake()
@@ -33,12 +31,10 @@ namespace MS.Games
 
         protected override void OnSkillEnd()
         {
-            m_Active.enabled = true;
         }
 
         protected override void OnSkillStart()
         {
-            m_Active.enabled = false;
             StartCoroutine(Attack());
         }
 

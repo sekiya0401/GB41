@@ -1,8 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEditor;
 
-namespace Prototype.Games
+namespace MS.Games
 {
     public class SimpleSpawner : MonoBehaviour
     {
