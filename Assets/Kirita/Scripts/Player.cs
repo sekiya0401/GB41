@@ -39,6 +39,7 @@ namespace Prototype.Games
         private bool m_IsRegenerating = false;
         private bool m_IsDead = false;
         private float m_Stamina;
+        public bool m_IsMoveing { get; private set; }
         public float Stamina
         {
             get => m_Stamina;
@@ -217,6 +218,8 @@ namespace Prototype.Games
 
             //ˆÚ“®
             m_KCC.Move(move, 0);
+
+            m_IsMoveing = true;
 
             if (m_IsRegenerating)
             {
